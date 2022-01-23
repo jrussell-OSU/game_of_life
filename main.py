@@ -28,12 +28,17 @@ import time
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 5  # CONSTANT: sets how many rows in grid
-        self._columns = 10  # CONSTANT: sets how many columns in grid
-        self._grid = []  # contains current game state
+        self._rows = 10  # CONSTANT: sets how many rows in grid
+        self._columns = 20  # CONSTANT: sets how many columns in grid
+        self._grid = []  # contains current grid state
+        self._saved_grid = []  # grid state prior to cell iteration
         self._ticks = 0  # tracks current number of ticks/intervals
-        self._tick_time = .5  # CONSTANT: sets amount of time between ticks
-        self._probability = 6  # CONSTANT: odds of cell being alive. lower number == higher chance
+        self._tick_time = .35  # CONSTANT: sets amount of time between ticks
+        self._probability = 9  # CONSTANT: odds of cell being alive. lower number == higher chance
+
+
+    def get_tick_time(self):
+        return self._tick_time
 
     def create_blank_grid(self):
         temp = []
@@ -42,15 +47,21 @@ class GameOfLife:
         for p in range(self._rows):
             self._grid.append(temp[:])
 
-    def random_starter(self):
-        for row in self._grid:
-            for i in range(self._columns):
-                rand_num = random.randint(1, self._probability)
-                if rand_num > self._probability - 1:
-                    row[i] = 1
-
     def print_grid(self):
         for row in self._grid:
+            for cell in row:
+                if cell == 1:
+                    print(u"\u2588", end="")
+                else:
+                    print(" ", end="")
+            print("")
+        line_divide = [""]
+        for i in range(self._columns):
+            print("-", end="")
+        print("")
+
+    def print_saved_grid(self):
+        for row in self._saved_grid:
             for cell in row:
                 if cell == 1:
                     print(u"\u2588", end="")
@@ -70,23 +81,39 @@ class GameOfLife:
                 coords.append((x, y))
         return coords
 
-    def set_cell_values(self, coordinates):
-        """
-        takes list of cell coords and sets 1 or 0 based on rules
-        Rules: If living cell has <2 or >3 neighbors, cell dies (0).
-        If dead cell has exactly 3 neighbors, live cell created (1).
-        """
-        for (x, y) in coordinates:
-            cell = self._grid[y][x]
-            neighbors = self.total_neighbors((x, y))
-            if cell == 0:
-                if neighbors == 3:
-                    self._grid[y][x] = 1
-            else:  # if cell == 1
-                if neighbors < 2 or neighbors > 3:
-                    self._grid[y][x] = 0
-
     def total_neighbors(self, coords):
+        """takes cell coords and returns total number of "living" (1) neighbors"""
+        (x, y) = coords
+        # cell (1, 3) has 3 neighbors  (should have 2)
+        neighbors = 0
+        # print("checking: ", (x, y))
+        for i in range(-1, 2):
+            for p in range(-1, 2):
+                # print("Cell", (x, y), "Neighbor:", ((x+i) % self._columns, (y+p) % self._rows),
+                      # "Value:", self._grid[(y+p) % self._rows][(x+i) % self._columns]) # for debugging
+                neighbors += self._grid[(y+p) % self._rows][(x+i) % self._columns]
+        if self._grid[y][x] == 1:
+            neighbors -= 1  # don't count own cell as a neighbor
+        # print("cell", (x, y), "has", neighbors, "neighbors")  # debugging
+        return neighbors
+
+    def total_neighbors2(self, coords):
+        """takes cell coords and returns total number of "living" (1) neighbors"""
+        (x, y) = coords
+        # cell (1, 3) has 3 neighbors  (should have 2)
+        neighbors = 0
+        # print("checking: ", (x, y))
+        for i in range(-1, 2):
+            for p in range(-1, 2):
+                print("Cell", (x, y), "Neighbor:", ((x+i) % self._columns, (y+p) % self._rows),
+                      "Value:", self._saved_grid[(y+p) % self._rows][(x+i) % self._columns])
+                neighbors += self._saved_grid[(y+p) % self._rows][(x+i) % self._columns]
+        if self._saved_grid[y][x] == 1:
+            neighbors -= 1  # don't count own cell as a neighbor
+        print("cell", (x, y), "has", neighbors, "neighbors")  # debugging
+        return neighbors
+
+    def total_neighbors3(self, coords):
         """takes cell coords and returns total number of "living" (1) neighbors"""
         (x, y) = coords
         neighbors = 0
@@ -96,39 +123,78 @@ class GameOfLife:
                 for p in range(-1, 2):
                     if 0 <= y+p < self._rows:
                         #print("looking at cell: ", (x+i,y+p))
-                        neighbors += self._grid[y+p][x+i]
-        # print("cell", x, y, "has", neighbors, "neighbors") # debugging
+                        neighbors += self._saved_grid[y+p][x+i]
+        if self._saved_grid[y][x] == 1:
+            neighbors -= 1  # don't count own cell as a neighbor
+        print("cell", (x, y), "has", neighbors, "neighbors")  # debugging
         return neighbors
 
-    def create_pulsar(self):
+    def set_cell_values(self, coordinates):
+        """
+        takes list of cell coords and sets 1 or 0 based on rules
+        Rules: If living cell has <2 or >3 neighbors, cell dies (0).
+        If dead cell has exactly 3 neighbors, live cell created (1).
+        """
+        #self._saved_grid = self._grid.copy()  # copy grid as reference
+        live = []  # all cells set to flip to 1
+        die = []  # all cells set to flip to 0
+        for (x, y) in coordinates:
+            cell = self._grid[y][x]
+            neighbors = self.total_neighbors((x, y))
+            if cell == 0:
+                if neighbors == 3:
+                    # self._grid[y][x] = 1
+                    live.append((x, y))
+            else:  # if cell == 1
+                if neighbors < 2 or neighbors > 3:
+                    # self._grid[y][x] = 0
+                    die.append((x, y))
+        for (x, y) in live:
+            self._grid[y][x] = 1
+        for (x, y) in die:
+            self._grid[y][x] = 0
+
+
+
+# ######################################################################
+
+#    SEED GRIDS
+
+# #######################################################################
+
+    def random_seed(self):
+        self.create_blank_grid()
+        for row in self._grid:
+            for i in range(self._columns):
+                rand_num = random.randint(1, self._probability)
+                if rand_num > self._probability - 1:
+                    row[i] = 1
+
+    def pulsar_seed(self):
         """sets board up as the oscillator known as pulsar (period 3)"""
         self._rows = 17
         self._columns = 17
         self.create_blank_grid()
         #on_cells = [()]
 
-    def get_tick_time(self):
-        return self._tick_time
+    def blinker_seed(self):
+        self._rows = 5
+        self._columns = 5
+        self.create_blank_grid()
+        coordinates = [(2, 1), (2, 2), (2, 3)]
+        for (x, y) in coordinates:
+            self._grid[y][x] = 1
+
+
 
 
 if __name__ == "__main__":
     game = GameOfLife()
-    game.create_blank_grid()  # creates a blank game grid of all "dead" cells
-    game.random_starter()  # uses randomization to turn some cells "on"
+    #game.random_seed()  # uses randomization to turn some cells "on"
+    game.blinker_seed()
     game.print_grid()
     while True:
         time.sleep(game.get_tick_time())
         coordinates = game.get_all_cell_coords()
         game.set_cell_values(coordinates)
         game.print_grid()
-"""
-if __name__ == "__main__":
-    game = GameOfLife()
-    game.create_pulsar()
-    game.print_grid()
-    while True:
-        time.sleep(game.get_ticks())
-        coordinates = game.get_all_cell_coords()
-        game.set_cell_values(coordinates)
-        game.print_grid()
-"""
