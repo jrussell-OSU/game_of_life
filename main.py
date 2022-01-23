@@ -28,13 +28,13 @@ import time
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 10  # CONSTANT: sets how many rows in grid
-        self._columns = 20  # CONSTANT: sets how many columns in grid
+        self._rows = 15  # CONSTANT: sets how many rows in grid
+        self._columns = 90  # CONSTANT: sets how many columns in grid
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
         self._ticks = 0  # tracks current number of ticks/intervals
-        self._tick_time = .35  # CONSTANT: sets amount of time between ticks
-        self._probability = 9  # CONSTANT: odds of cell being alive. lower number == higher chance
+        self._tick_time = .1  # CONSTANT: sets amount of time between ticks
+        self._probability = 8  # CONSTANT: odds of cell being alive. lower number == higher chance
 
 
     def get_tick_time(self):
@@ -97,38 +97,6 @@ class GameOfLife:
         # print("cell", (x, y), "has", neighbors, "neighbors")  # debugging
         return neighbors
 
-    def total_neighbors2(self, coords):
-        """takes cell coords and returns total number of "living" (1) neighbors"""
-        (x, y) = coords
-        # cell (1, 3) has 3 neighbors  (should have 2)
-        neighbors = 0
-        # print("checking: ", (x, y))
-        for i in range(-1, 2):
-            for p in range(-1, 2):
-                print("Cell", (x, y), "Neighbor:", ((x+i) % self._columns, (y+p) % self._rows),
-                      "Value:", self._saved_grid[(y+p) % self._rows][(x+i) % self._columns])
-                neighbors += self._saved_grid[(y+p) % self._rows][(x+i) % self._columns]
-        if self._saved_grid[y][x] == 1:
-            neighbors -= 1  # don't count own cell as a neighbor
-        print("cell", (x, y), "has", neighbors, "neighbors")  # debugging
-        return neighbors
-
-    def total_neighbors3(self, coords):
-        """takes cell coords and returns total number of "living" (1) neighbors"""
-        (x, y) = coords
-        neighbors = 0
-        # print("checking: ", (x, y))
-        for i in range(-1, 2):
-            if 0 <= x+i < self._columns:
-                for p in range(-1, 2):
-                    if 0 <= y+p < self._rows:
-                        #print("looking at cell: ", (x+i,y+p))
-                        neighbors += self._saved_grid[y+p][x+i]
-        if self._saved_grid[y][x] == 1:
-            neighbors -= 1  # don't count own cell as a neighbor
-        print("cell", (x, y), "has", neighbors, "neighbors")  # debugging
-        return neighbors
-
     def set_cell_values(self, coordinates):
         """
         takes list of cell coords and sets 1 or 0 based on rules
@@ -154,8 +122,6 @@ class GameOfLife:
         for (x, y) in die:
             self._grid[y][x] = 0
 
-
-
 # ######################################################################
 
 #    SEED GRIDS
@@ -175,7 +141,6 @@ class GameOfLife:
         self._rows = 17
         self._columns = 17
         self.create_blank_grid()
-        #on_cells = [()]
 
     def blinker_seed(self):
         self._rows = 5
@@ -185,13 +150,30 @@ class GameOfLife:
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
+    def glider_seed(self):
+        self._rows = 6
+        self._columns = 6
+        self.create_blank_grid()
+        coordinates = [(1, 2), (2, 3), (2, 4), (3, 2), (3, 3)]
+        for (x, y) in coordinates:
+            self._grid[y][x] = 1
 
-
+    def penta_decathlon_seed(self):
+        self._rows = 18
+        self._columns = 11
+        self.create_blank_grid()
+        coordinates = [(4, 5), (4, 6), (4, 7), (4, 8), (4, 9), (4, 10), (4, 11), (4, 12),
+                       (5, 5), (5, 7), (5, 8), (5, 9), (5, 10), (5, 12),
+                       (6, 5), (6, 6), (6, 7), (6, 8), (6, 9), (6, 10), (6, 11), (6, 12)]
+        for (x, y) in coordinates:
+            self._grid[y][x] = 1
 
 if __name__ == "__main__":
     game = GameOfLife()
-    #game.random_seed()  # uses randomization to turn some cells "on"
-    game.blinker_seed()
+    game.random_seed()  # uses randomization to turn some cells "on"
+    #game.blinker_seed()
+    #game.glider_seed()
+    #game.penta_decathlon_seed()
     game.print_grid()
     while True:
         time.sleep(game.get_tick_time())
