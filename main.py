@@ -33,7 +33,7 @@ class GameOfLife:
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
         self._ticks = 0  # tracks current number of ticks/intervals
-        self._tick_time = .1  # CONSTANT: sets amount of time between ticks
+        self._tick_time = .25  # CONSTANT: sets amount of time between ticks
         self._probability = 8  # CONSTANT: odds of cell being alive. lower number == higher chance
 
 
@@ -48,6 +48,7 @@ class GameOfLife:
             self._grid.append(temp[:])
 
     def print_grid(self):
+        """Display gird in human friendly way"""
         for row in self._grid:
             for cell in row:
                 if cell == 1:
@@ -55,21 +56,7 @@ class GameOfLife:
                 else:
                     print(" ", end="")
             print("")
-        line_divide = [""]
-        for i in range(self._columns):
-            print("-", end="")
-        print("")
-
-    def print_saved_grid(self):
-        for row in self._saved_grid:
-            for cell in row:
-                if cell == 1:
-                    print(u"\u2588", end="")
-                else:
-                    print(" ", end="")
-            print("")
-        line_divide = [""]
-        for i in range(self._columns):
+        for i in range(self._columns):  # line divider between iterations
             print("-", end="")
         print("")
 
