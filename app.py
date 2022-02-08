@@ -2,27 +2,24 @@
 # Date: January 22, 2022
 # Description: My version of Conway's Game of Life
 
-"""
-Outline:
-
-1: Create grid (of 0's, or dead cells)
-    a. List of lists or,
-    b. Dictionary
-2: Create starting points of the "living" cells (1's)
-    a. Pre-made options to choose from and/or
-    b. Allow user input to dictate where live cells start
-3: Set the rules
-    a. Living cells die if surrounded by <2 or >3 living cells
-    b. Dead cells live if surrounded by exactly 3 living cells
-4: Set ticks/intervals
-    a. Use time module to set .5 second intervals?
-5: Calculate whether each cell is living or dead after each interval
-    a. For each list index, check cells around it to see if it lives or dies
-
-"""
 
 import random
 import time
+from flask import *
+
+app = Flask(__name__)
+
+
+
+
+
+"""
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('index.html', name=name)
+"""
+
 
 
 class GameOfLife:
@@ -33,8 +30,8 @@ class GameOfLife:
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
         self._ticks = 0  # tracks current number of ticks/intervals
-        self._tick_time = .25  # CONSTANT: sets amount of time between ticks
-        self._probability = 8  # CONSTANT: odds of cell being alive. lower number == higher chance
+        self._tick_time = .30  # CONSTANT: sets amount of time between ticks
+        self._probability = 4  # CONSTANT: odds of cell being alive. lower number == higher chance
 
 
     def get_tick_time(self):
@@ -155,6 +152,14 @@ class GameOfLife:
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
+
+@app.route("/")
+def gol_server():
+    game = GameOfLife()
+    game.random_seed()
+    return render_template('index.html', grid=game._grid)
+
+"""
 if __name__ == "__main__":
     game = GameOfLife()
     game.random_seed()  # uses randomization to turn some cells "on"
@@ -167,3 +172,4 @@ if __name__ == "__main__":
         coordinates = game.get_all_cell_coords()
         game.set_cell_values(coordinates)
         game.print_grid()
+"""
