@@ -1,0 +1,21 @@
+
+body {
+    /*background-color: #573E3E;*/
+    background-image: url(images/nebula_brown.png);
+}
+
+table {
+  table-layout: fixed;
+  /*border-collapse: collapse;
+  height: 300px;
+  width: 300px;
+  background: url("http://clipart-library.com/new_gallery/9-92768_grass-png-hd-nature-clipart-transparent-background.png");
+  */empty-cells: show;
+  position: absolute;
+}
+
+td {
+    width: 10px;
+    height: 10px;
+}
+

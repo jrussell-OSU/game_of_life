@@ -6,6 +6,7 @@
 import random
 import time
 from flask import *
+import asyncio
 
 app = Flask(__name__)
 
@@ -25,17 +26,18 @@ def hello(name=None):
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 15  # CONSTANT: sets how many rows in grid
-        self._columns = 90  # CONSTANT: sets how many columns in grid
+        self._rows = 40  # CONSTANT: sets how many rows in grid
+        self._columns = 60  # CONSTANT: sets how many columns in grid
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
-        self._ticks = 0  # tracks current number of ticks/intervals
-        self._tick_time = .30  # CONSTANT: sets amount of time between ticks
+        self._cycles = 0  # tracks current number of cycles/intervals
+        self._cycle_time = 1  # CONSTANT: sets amount of time between cycles
         self._probability = 4  # CONSTANT: odds of cell being alive. lower number == higher chance
+        self._display_grid = []
+        self._max_cycles = 100
 
-
-    def get_tick_time(self):
-        return self._tick_time
+    def get_cycle_time(self):
+        return self._cycle_time
 
     def create_blank_grid(self):
         temp = []
@@ -64,6 +66,22 @@ class GameOfLife:
             for y in range(self._rows):
                 coords.append((x, y))
         return coords
+
+    def create_blank_display_grid(self):
+        temp = []
+        for i in range(self._columns):
+            temp.append(0)
+        for p in range(self._rows):
+            self._display_grid.append(temp[:])
+
+    def generate_display_grid(self, coordinates):
+        """For use to display on the website"""
+        for (x, y) in coordinates:
+            if self._grid[y][x] == 1:
+                self._display_grid[y][x] = u"\u2588"
+            else:
+                self._display_grid[y][x] = " "
+
 
     def total_neighbors(self, coords):
         """takes cell coords and returns total number of "living" (1) neighbors"""
@@ -105,6 +123,7 @@ class GameOfLife:
             self._grid[y][x] = 1
         for (x, y) in die:
             self._grid[y][x] = 0
+        self._cycles += 1
 
 # ######################################################################
 
@@ -153,11 +172,17 @@ class GameOfLife:
             self._grid[y][x] = 1
 
 
+game = GameOfLife()
+game.random_seed()
+
+
 @app.route("/")
 def gol_server():
-    game = GameOfLife()
-    game.random_seed()
-    return render_template('index.html', grid=game._grid)
+    while True:
+        coordinates = game.get_all_cell_coords()
+        game.set_cell_values(coordinates)
+        return render_template('index.html', grid=game._grid)
+
 
 """
 if __name__ == "__main__":
@@ -168,7 +193,7 @@ if __name__ == "__main__":
     #game.penta_decathlon_seed()
     game.print_grid()
     while True:
-        time.sleep(game.get_tick_time())
+        time.sleep(game.get_cycle_time())
         coordinates = game.get_all_cell_coords()
         game.set_cell_values(coordinates)
         game.print_grid()
