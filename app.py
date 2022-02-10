@@ -1,26 +1,15 @@
 # Author: Jacob Russell
-# Date: January 22, 2022
+# Date: 01-22-2022
 # Description: My version of Conway's Game of Life
 
-
+import pandas
 import random
 import time
 from flask import *
 import asyncio
+import json
 
 app = Flask(__name__)
-
-
-
-
-
-"""
-@app.route('/hello/')
-@app.route('/hello/<name>')
-def hello(name=None):
-    return render_template('index.html', name=name)
-"""
-
 
 
 class GameOfLife:
@@ -82,7 +71,6 @@ class GameOfLife:
             else:
                 self._display_grid[y][x] = " "
 
-
     def total_neighbors(self, coords):
         """takes cell coords and returns total number of "living" (1) neighbors"""
         (x, y) = coords
@@ -92,7 +80,7 @@ class GameOfLife:
         for i in range(-1, 2):
             for p in range(-1, 2):
                 # print("Cell", (x, y), "Neighbor:", ((x+i) % self._columns, (y+p) % self._rows),
-                      # "Value:", self._grid[(y+p) % self._rows][(x+i) % self._columns]) # for debugging
+                # "Value:", self._grid[(y+p) % self._rows][(x+i) % self._columns]) # for debugging
                 neighbors += self._grid[(y+p) % self._rows][(x+i) % self._columns]
         if self._grid[y][x] == 1:
             neighbors -= 1  # don't count own cell as a neighbor
@@ -105,7 +93,7 @@ class GameOfLife:
         Rules: If living cell has <2 or >3 neighbors, cell dies (0).
         If dead cell has exactly 3 neighbors, live cell created (1).
         """
-        #self._saved_grid = self._grid.copy()  # copy grid as reference
+        # self._saved_grid = self._grid.copy()  # copy grid as reference
         live = []  # all cells set to flip to 1
         die = []  # all cells set to flip to 0
         for (x, y) in coordinates:
@@ -171,17 +159,57 @@ class GameOfLife:
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
+    def get_json_grid(self):
+        coordinates = game.get_all_cell_coords()
+        game.set_cell_values(coordinates)
+        grid_json = json.dumps(self._grid)
+        # grid_json = jsonify({"gol_grid": self._grid})
+        return grid_json
+
+    def get_json_grid2(self):
+        coordinates = game.get_all_cell_coords()
+        game.set_cell_values(coordinates)
+        json_grid = {}
+        rows = []
+        cells = []
+        for i in range(0, self._rows):
+            rows.append("row" + str(i))
+            cells.append(self._grid[i])
+        for i in range(len(rows)):
+            json_grid[rows[i]] = str(cells[i])
+        #print(json_grid)
+        #print(jsonify(json_grid))
+        return jsonify(json_grid)
+
+    def get_json_grid3(self):
+        coordinates = game.get_all_cell_coords()
+        game.set_cell_values(coordinates)
+        pd_grid = pandas.DataFrame(game._grid)
+        json_grid = pd_grid.to_json()
+        return json_grid
 
 game = GameOfLife()
 game.random_seed()
 
+@app.route("/")
+def gol_server():
+    return render_template('index.html', grid=game.get_json_grid())
 
+@app.route("/grid")
+def update_grid():
+    return game.get_json_grid()
+
+"""
 @app.route("/")
 def gol_server():
     while True:
+        time.sleep(1)
         coordinates = game.get_all_cell_coords()
         game.set_cell_values(coordinates)
+        # grid_dict = {'grid' : game._grid}
         return render_template('index.html', grid=game._grid)
+"""
+
 
 
 """

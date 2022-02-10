@@ -1,21 +1,32 @@
 
 body {
     /*background-color: #573E3E;*/
-    background-image: url(images/nebula_brown.png);
+    /*background-image: url(images/nebula_brown.png);*/
+
 }
 
 table {
-  table-layout: fixed;
-  /*border-collapse: collapse;
-  height: 300px;
-  width: 300px;
-  background: url("http://clipart-library.com/new_gallery/9-92768_grass-png-hd-nature-clipart-transparent-background.png");
-  */empty-cells: show;
-  position: absolute;
+    table-layout: fixed;
+    /*border-collapse: collapse;*/
+    height: 320px;
+    width: 480px;
+    /*background: url("http://clipart-library.com/new_gallery/9-92768_grass-png-hd-nature-clipart-transparent-background.png");*/
+    empty-cells: show;
+    /*background-image: url(images/nebula_brown.png);*/
+
+    position: absolute;
+}
+
+.living_cell{
+    background-color: green;
+}
+
+.dead_cell{
+    background-color: white;
 }
 
 td {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
 }
 
