@@ -2,11 +2,8 @@
 # Date: 01-22-2022
 # Description: My version of Conway's Game of Life
 
-import pandas
 import random
-import time
-from flask import *
-import asyncio
+from flask import Flask, render_template
 import json
 
 app = Flask(__name__)
@@ -187,4 +184,5 @@ def game_page():
     game.random_seed()
     return render_template('game.html')
 
-
+if __name__ == '__main__':
+    app.run()
