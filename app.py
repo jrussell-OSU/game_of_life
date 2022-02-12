@@ -160,69 +160,31 @@ class GameOfLife:
             self._grid[y][x] = 1
 
     def get_json_grid(self):
-        coordinates = game.get_all_cell_coords()
-        game.set_cell_values(coordinates)
+        coordinates = self.get_all_cell_coords()
+        self.set_cell_values(coordinates)
         grid_json = json.dumps(self._grid)
         # grid_json = jsonify({"gol_grid": self._grid})
         return grid_json
 
-    def get_json_grid2(self):
-        coordinates = game.get_all_cell_coords()
-        game.set_cell_values(coordinates)
-        json_grid = {}
-        rows = []
-        cells = []
-        for i in range(0, self._rows):
-            rows.append("row" + str(i))
-            cells.append(self._grid[i])
-        for i in range(len(rows)):
-            json_grid[rows[i]] = str(cells[i])
-        #print(json_grid)
-        #print(jsonify(json_grid))
-        return jsonify(json_grid)
 
-    def get_json_grid3(self):
-        coordinates = game.get_all_cell_coords()
-        game.set_cell_values(coordinates)
-        pd_grid = pandas.DataFrame(game._grid)
-        json_grid = pd_grid.to_json()
-        return json_grid
 
 game = GameOfLife()
 game.random_seed()
 
+
 @app.route("/")
-def gol_server():
-    return render_template('index.html', grid=game.get_json_grid())
+def home():
+    return render_template('index.html')
+
 
 @app.route("/grid")
 def update_grid():
     return game.get_json_grid()
 
-"""
-@app.route("/")
-def gol_server():
-    while True:
-        time.sleep(1)
-        coordinates = game.get_all_cell_coords()
-        game.set_cell_values(coordinates)
-        # grid_dict = {'grid' : game._grid}
-        return render_template('index.html', grid=game._grid)
-"""
-
-
-
-"""
-if __name__ == "__main__":
+@app.route("/game")
+def game_page():
     game = GameOfLife()
-    game.random_seed()  # uses randomization to turn some cells "on"
-    #game.blinker_seed()
-    #game.glider_seed()
-    #game.penta_decathlon_seed()
-    game.print_grid()
-    while True:
-        time.sleep(game.get_cycle_time())
-        coordinates = game.get_all_cell_coords()
-        game.set_cell_values(coordinates)
-        game.print_grid()
-"""
+    game.random_seed()
+    return render_template('game.html')
+
+

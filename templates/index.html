@@ -1,67 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <title>Game of Life</title>
+    <title>Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <!--<script src="{{url_for('static', filename='script.js')}}"></script>-->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   </head>
   <body>
+  <h1>Welcome to Conway's Game of Life!</h1>
+
+  <a href="http://127.0.0.1:5000/game">Start Randomized Game</a>
+  <a href="http://127.0.0.1:5000/index">Reset Game</a>
 
   </body>
-    <script type="text/javascript">
-      //Create a table and fill cells every second
-      setInterval(function() {
-        //var gol_grid = $(#result).get("/grid");
-        const gold_grid = [];
-        fetch('/grid').then(response => response.json()).then(gol_grid => {
-          //console.log(gol_grid);
-          //console.log(gol_grid[1]);
-        //response.json().then(gol_grid => {   //hopefully this response.json works
-          //create table
-          let doc_body = document.getElementsByTagName('body')[0];
-          let tbl = document.createElement('TABLE');
-          //tbl.style.width = '460px';
-          //tbl.style.height = '340px';
-          doc_body.appendChild(tbl);
-          let tbl_body = document.createElement('TBODY');
-          tbl.appendChild(tbl_body);
-          //tbl.style.width = '300px';  //not sure if using CSS is faster or slower
-          //tbl.style.height = '400px';
-          let rows = gol_grid;
-          //console.log(rows);
-          for (let i=0; i<rows.length; i++){
-            let tbl_row = document.createElement('TR');
-            tbl_body.appendChild(tbl_row);
-            let curr_row = rows[i];
-            //console.log(curr_row.length);
-            for (let j=0; j<curr_row.length; j++){
-              let curr_cell = curr_row[j]
-                //console.log(curr_row);
-                //console.log(curr_cell);
-              if (curr_cell === 1){
-                //create a living cell
-                let cell = document.createElement('TD');
-                cell.className = "living_cell";  //add to CSS for background color
-                //cell.style.background-color = 'green';  //this may not work
-                tbl_row.appendChild(cell);
-                //console.log(curr_cell);
-                //console.log("Living cell");
-              } else {
-                //create a dead (empty) cell
-                let cell = document.createElement('TD');
-                cell.className = "dead_cell"; //add to CSS if needed
-                tbl_row.appendChild(cell);
-                //console.log(curr_cell);
-                //console.log("Dead cell");
-              }
-            }
-          }
-        });
-      }, 1000);
 
-
-    </script>
 </html>
