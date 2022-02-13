@@ -1,6 +1,6 @@
 
 //Change cycle/interval time based on uesr input
-let cycle_speed = 150;  //default
+let cycle_speed = 500;  //default
 function fast_cycle_speed(){
   cycle_speed = 150;
 }
@@ -31,8 +31,8 @@ function change_background(){
 
 //Change color of living cell on button click
 //Default cell color
-let living_color = "limegreen";
-const color_choices = ["cyan", "red", "pink", "yellow", "black", "white", "limegreen"];
+let living_color = "cyan";
+const color_choices = ["limegreen", "red", "pink", "yellow", "black", "white", "cyan"];
 let c = 0;
 function change_cell_color(){
   if (c >= color_choices.length) {
