@@ -1,4 +1,34 @@
 
+//Change cycle/interval time based on uesr input
+let cycle_speed = 150;  //default
+function fast_cycle_speed(){
+  cycle_speed = 150;
+}
+function medium_cycle_speed(){
+  cycle_speed = 500;
+}
+function slow_cycle_speed(){
+  cycle_speed = 800;
+}
+
+//Player change cell color
+function change_color(color) {
+  living_color = color;
+}
+
+//Changing page background image
+const background_images = ["tidal.jpg", "nebula.png", "leaves.jpeg", "city.webp", "space.jpg"];
+let i = 0;
+let image = null;
+function change_background(){
+  if (i >= background_images.length){
+      i = 0;
+  }
+  let img_url = "url('../static/images/" + background_images[i++] + "')";
+  document.body.style.backgroundImage = img_url;
+  //document.body.style.backgroundImage = "url('../static/images/tidal.jpg')";
+}
+
 //Change color of living cell on button click
 //Default cell color
 let living_color = "limegreen";
@@ -11,8 +41,11 @@ function change_cell_color(){
   living_color = color_choices[c++];
 }
 
+
+
 //Run game after the start game button pressed
 function start_game() {
+  document.getElementById("start_game").disabled = true;
 
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
@@ -76,10 +109,9 @@ function start_game() {
         }
       }
     });
-  }, 150);
+  }, cycle_speed);
 
 }
 
-//Dynamically create a table from python info that updates every second
 
 

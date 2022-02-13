@@ -1,33 +1,24 @@
 
-
 body {
     background-color: #91672C;
-    /*background-image: url(images/nebula_brown.png);*/
+    background-image: url(images/space.jpg);
+}
+
+label, h1, p {
+    color: #E3E4E4;
 }
 
 div{
     padding: 20px;
 }
 
-h1{
-    color: #E3E4E4;
-}
-
 table {
     table-layout: fixed;
-    border-collapse: collapse;
+    /*border-collapse: collapse;*/
     height: 320px;
     width: 480px;
-    /*background: url("http://clipart-library.com/new_gallery/9-92768_grass-png-hd-nature-clipart-transparent-background.png");*/
     empty-cells: show;
-    /*background-image: url(images/nebula_brown.png);*/
-    /*position: absolute;*/
 }
-/*
-.living_cell{
-    background-color: limegreen;
-}
-*/
 
 .dead_cell{
     background-color: transparent;

@@ -12,7 +12,7 @@ app = Flask(__name__)
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 60  # CONSTANT: sets how many rows in grid
+        self._rows = 65  # CONSTANT: sets how many rows in grid
         self._columns = 120  # CONSTANT: sets how many columns in grid
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
@@ -169,19 +169,14 @@ game.random_seed()
 
 @app.route("/")
 def home():
+    game._grid = []  # every time starting a new game, reset game
+    game.random_seed()
     return render_template('index.html')
 
 
 @app.route("/grid")
 def update_grid():
     return game.get_json_grid()
-
-
-@app.route("/game")
-def game_page():
-    game._grid = []  # every time starting a new game, reset game
-    game.random_seed()
-    return render_template('game.html')
 
 
 if __name__ == '__main__':
