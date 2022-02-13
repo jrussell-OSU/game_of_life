@@ -14,7 +14,7 @@ div{
 
 table {
     table-layout: fixed;
-    /*border-collapse: collapse;*/
+    border-collapse: collapse;
     height: 320px;
     width: 480px;
     empty-cells: show;

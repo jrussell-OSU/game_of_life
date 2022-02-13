@@ -12,8 +12,8 @@ app = Flask(__name__)
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 65  # CONSTANT: sets how many rows in grid
-        self._columns = 120  # CONSTANT: sets how many columns in grid
+        self._rows = 40  # CONSTANT: sets how many rows in grid
+        self._columns = 60  # CONSTANT: sets how many columns in grid
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
         self._cycles = 0  # tracks current number of cycles/intervals
