@@ -3,7 +3,7 @@
 # Description: My version of Conway's Game of Life
 
 import random
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 import json
 
 app = Flask(__name__)
@@ -12,8 +12,8 @@ app = Flask(__name__)
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 40  # CONSTANT: sets how many rows in grid
-        self._columns = 60  # CONSTANT: sets how many columns in grid
+        self._rows = 60  # CONSTANT: sets how many rows in grid
+        self._columns = 120  # CONSTANT: sets how many columns in grid
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
         self._cycles = 0  # tracks current number of cycles/intervals
@@ -163,8 +163,6 @@ class GameOfLife:
         # grid_json = jsonify({"gol_grid": self._grid})
         return grid_json
 
-
-
 game = GameOfLife()
 game.random_seed()
 
@@ -178,11 +176,13 @@ def home():
 def update_grid():
     return game.get_json_grid()
 
+
 @app.route("/game")
 def game_page():
-    game = GameOfLife()
+    game._grid = []  # every time starting a new game, reset game
     game.random_seed()
     return render_template('game.html')
+
 
 if __name__ == '__main__':
     app.run()

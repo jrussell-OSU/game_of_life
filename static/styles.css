@@ -1,28 +1,36 @@
 
-body {
-    /*background-color: #573E3E;*/
-    /*background-image: url(images/nebula_brown.png);*/
 
+body {
+    background-color: #91672C;
+    /*background-image: url(images/nebula_brown.png);*/
+}
+
+div{
+    padding: 20px;
+}
+
+h1{
+    color: #E3E4E4;
 }
 
 table {
     table-layout: fixed;
-    /*border-collapse: collapse;*/
+    border-collapse: collapse;
     height: 320px;
     width: 480px;
     /*background: url("http://clipart-library.com/new_gallery/9-92768_grass-png-hd-nature-clipart-transparent-background.png");*/
     empty-cells: show;
     /*background-image: url(images/nebula_brown.png);*/
-
-    position: absolute;
+    /*position: absolute;*/
 }
-
+/*
 .living_cell{
-    background-color: green;
+    background-color: limegreen;
 }
+*/
 
 .dead_cell{
-    background-color: white;
+    background-color: transparent;
 }
 
 td {
@@ -30,3 +38,7 @@ td {
     height: 8px;
 }
 
+#game_div {
+    position: relative;
+    padding-left: 10px;
+    }

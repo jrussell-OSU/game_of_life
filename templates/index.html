@@ -11,9 +11,34 @@
   <body>
   <h1>Welcome to Conway's Game of Life!</h1>
 
-  <a href="/game">Start Randomized Game</a>
-  <a href="/index">Reset Game</a>
+  <div id="buttons_div">
+    <button id="start_game" onclick="start_game()">Start Game</button>
+    <button onClick="window.location.reload();">Stop/Reset</button>
+    <button id="change_background" onclick="change_background()">Change Background</button>
+    <button id="change_cell_color" onclick="change_cell_color()">Cell Color</button>
+  </div>
 
   </body>
+  <script>
 
+
+    //Player change cell color
+    function change_color(color) {
+      living_color = color;
+    }
+
+    //Changing page background image
+    const background_images = ["tidal.jpg", "nebula.png", "leaves.jpeg", "city.webp"];
+    let i = 0;
+    let image = null;
+    function change_background(){
+      if (i > background_images.length){
+          i = 0;
+      }
+      let img_url = "url('../static/images/" + background_images[i++] + "')";
+      document.body.style.backgroundImage = img_url;
+      //document.body.style.backgroundImage = "url('../static/images/tidal.jpg')";
+  }
+  </script>
+  <script src="../static/game_script.js"></script>
 </html>
