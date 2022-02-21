@@ -16,6 +16,7 @@ function change_color(color) {
   living_color = color;
 }
 
+/*
 //Changing page background image
 const background_images = ["tidal.jpg", "nebula.png", "leaves.jpeg", "city.webp", "space.jpg"];
 let i = 0;
@@ -27,6 +28,20 @@ function change_background(){
   let img_url = "url('../static/images/" + background_images[i++] + "')";
   document.body.style.backgroundImage = img_url;
   //document.body.style.backgroundImage = "url('../static/images/tidal.jpg')";
+}
+*/
+
+let i = 0;
+function change_background(){
+
+  fetch('https://wikimedia-image-scraper.herokuapp.com/get_image_url/?word=nebula')
+      .then(response => response.json())
+      .then(data => {
+        document.body.style.backgroundImage = "url('" + data['IMAGE_URL'] + "')";
+        //console.log(data);
+        //console.log(data['IMAGE_URL']);
+      });
+
 }
 
 //Change color of living cell on button click

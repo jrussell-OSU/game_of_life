@@ -1,15 +1,23 @@
 
 body {
-    background-color: #91672C;
+    background-color: black;
     background-image: url(images/space.jpg);
+    background-size: auto;
 }
 
 label, h1, p {
     color: #E3E4E4;
 }
 
+h1{
+    text-align: center;
+}
+
 div{
     padding: 20px;
+    margin: auto;
+    max-width: 600px;
+    text-align: center;
 }
 
 table {
@@ -31,5 +39,5 @@ td {
 
 #game_div {
     position: relative;
-    padding-left: 10px;
+    /*padding-left: 10px;*/
     }

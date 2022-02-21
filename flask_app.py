@@ -5,6 +5,7 @@
 import random
 from flask import Flask, render_template, send_from_directory
 import json
+import requests
 
 app = Flask(__name__)
 
@@ -18,7 +19,7 @@ class GameOfLife:
         self._saved_grid = []  # grid state prior to cell iteration
         self._cycles = 0  # tracks current number of cycles/intervals
         self._cycle_time = 1  # CONSTANT: sets amount of time between cycles
-        self._probability = 4  # CONSTANT: odds of cell being alive. lower number == higher chance
+        self._probability = 6  # CONSTANT: odds of cell being alive. lower number == higher chance
         self._display_grid = []
         self._max_cycles = 100
 
@@ -163,6 +164,12 @@ class GameOfLife:
         # grid_json = jsonify({"gol_grid": self._grid})
         return grid_json
 
+    def new_background(self):
+        response = requests.get("https://wikimedia-image-scraper.herokuapp.com/get_image_url/?word=stars").json()
+        print("response: ", response)
+        print("url: ", response["IMAGE_URL"])
+
+
 game = GameOfLife()
 game.random_seed()
 
@@ -171,12 +178,18 @@ game.random_seed()
 def home():
     game._grid = []  # every time starting a new game, reset game
     game.random_seed()
+    #game.new_background()
     return render_template('index.html')
 
 
 @app.route("/grid")
 def update_grid():
     return game.get_json_grid()
+
+
+@app.route("/background")
+def background():
+    return game.new_background()
 
 
 if __name__ == '__main__':
