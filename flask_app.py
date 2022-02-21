@@ -178,18 +178,12 @@ game.random_seed()
 def home():
     game._grid = []  # every time starting a new game, reset game
     game.random_seed()
-    #game.new_background()
     return render_template('index.html')
 
 
 @app.route("/grid")
 def update_grid():
     return game.get_json_grid()
-
-
-@app.route("/background")
-def background():
-    return game.new_background()
 
 
 if __name__ == '__main__':
