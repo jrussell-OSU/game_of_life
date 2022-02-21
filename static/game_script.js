@@ -1,6 +1,6 @@
 
 //Change cycle/interval time based on uesr input
-let cycle_speed = 500;  //default
+let cycle_speed = 150;  //default
 function fast_cycle_speed(){
   cycle_speed = 150;
 }
@@ -38,10 +38,7 @@ function change_background(){
       .then(response => response.json())
       .then(data => {
         document.body.style.backgroundImage = "url('" + data['IMAGE_URL'] + "')";
-        //console.log(data);
-        //console.log(data['IMAGE_URL']);
       });
-
 }
 
 //Change color of living cell on button click
@@ -55,7 +52,6 @@ function change_cell_color(){
   }
   living_color = color_choices[c++];
 }
-
 
 
 //Run game after the start game button pressed
