@@ -63,7 +63,8 @@ function collapse_border() {
 }
 
 function change_background(){
-  fetch('http://localhost:9995/request=nebula')
+  //fetch('http://localhost:9995/request=nebula')
+  fetch('https://kathleen-image-scraper.herokuapp.com/request=nebula')
       .then(response => response.json())
       .then(data => {
         console.log(data["result"])
