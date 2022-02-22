@@ -196,22 +196,22 @@ def update_grid():
 
 @app.route("/glider")
 def glider_grid():
-    game._grid = []
     game.glider_seed()
+    game._grid = []
     return render_template('index.html')
 
 
 @app.route("/r_pentomino")
 def r_pentomino_grid():
-    game._grid = []
     game.r_pentomino_seed()
+    game._grid = []
     return render_template('index.html')
 
 
 @app.route("/penta_decathlon")
 def penta_decathlon_grid():
-    game._grid = []
     game.penta_decathlon_seed()
+    game._grid = []
     return render_template('index.html')
 
 
