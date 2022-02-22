@@ -70,7 +70,7 @@ function change_cell_color(){
 //Run game after the start game button pressed
 function start_game() {
   document.getElementById("start_game").disabled = true;
-
+document.getElementById("seed_dropdown").disabled = true;
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table

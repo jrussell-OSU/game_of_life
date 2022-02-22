@@ -126,6 +126,8 @@ class GameOfLife:
 # #######################################################################
 
     def random_seed(self):
+        self._rows = 40
+        self._columns = 40
         self.create_blank_grid()
         for row in self._grid:
             for i in range(self._columns):
@@ -198,11 +200,13 @@ def glider_grid():
     game.glider_seed()
     return render_template('index.html')
 
+
 @app.route("/r_pentomino")
 def r_pentomino_grid():
     game._grid = []
     game.r_pentomino_seed()
     return render_template('index.html')
+
 
 @app.route("/penta_decathlon")
 def penta_decathlon_grid():
