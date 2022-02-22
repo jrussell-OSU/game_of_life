@@ -3,6 +3,7 @@ body {
     background-color: black;
     background-image: url(images/space.jpg);
     background-size: auto;
+    text-align: center;
 }
 
 label, h1, p {
@@ -13,11 +14,22 @@ h1{
     text-align: center;
 }
 
-div{
+#buttons_div{
     padding: 20px;
     margin: auto;
-    max-width: 600px;
+    /*max-width: 600px;*/
+    max-width: 100%;
     text-align: center;
+    position: relative;
+    display: inline-block;
+}
+
+#game_div{
+    position: relative;
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+    display: inline-block;
 }
 
 table {
@@ -37,7 +49,46 @@ td {
     height: 8px;
 }
 
-#game_div {
+/*Range Slider from https://www.w3schools.com/howto/howto_js_rangeslider.asp*/
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+    text-align:center;
     position: relative;
-    /*padding-left: 10px;*/
-    }
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}

@@ -6,22 +6,31 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styles.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   </head>
   <body>
+  <br>
   <h1>Welcome to Conway's Game of Life!</h1>
 
   <div id="buttons_div">
-    <button id="start_game" onclick="start_game()">Start Game</button>
-    <button onClick="window.location.reload();">Stop/Reset</button>
-    <button id="change_background" onclick="change_background()">Change Background</button>
-    <button id="change_cell_color" onclick="change_cell_color()">Cell Color</button>
-    <button hidden id="change_cycle_speed" onclick="change_cycle_speed()">Cycle Speed</button>
+    <button id="start_game" class="btn btn-primary" onclick="start_game()">Start Game</button>
+    <button class="btn btn-primary" onClick="window.location.reload();">Stop/Reset</button>
+    <button id="change_background" class="btn btn-primary" onclick="change_background()">Change Background</button>
+    <button id="change_cell_color" class="btn btn-primary" onclick="change_cell_color()">Cell Color</button>
+    <!--<button hidden id="change_cycle_speed" onclick="change_cycle_speed()">Cycle Speed</button>-->
+    <button id="change_cell_color" class="btn btn-primary" onclick="collapse_border()">Grid on/off</button>
+    <button onClick="more_info()" class="btn btn-info">More Info</button>
+    </div>
     <br>
+    <div class="slidecontainer">
+      <label for="myRange">Faster</label>
+      <input type="range" min="50" max="800" value="150" class="slider" id="myRange">
+      <label for="myRange">Slower</label>
+`   </div>
+  <br><br>
 
+  <div id="game_div"></div>
+    <!--
     <p>Choose cycle speed prior to starting game:</p>
     <input type="radio" id="fast" name="speed" value="150" onClick="fast_cycle_speed();" checked>
     <label for="fast">Fast Speed</label>
@@ -29,9 +38,10 @@
     <label for="medium">Medium Speed</label>
     <input type="radio" id="slow" name="speed" value="1000" onClick="slow_cycle_speed();">
     <label for="slow">Slow Speed</label>
-    <br>
-    <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" class="btn btn-primary">More Info</a>
-  </div>
+    -->
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="../static/game_script.js"></script>
 </html>

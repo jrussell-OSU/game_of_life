@@ -1,6 +1,5 @@
 
-//Change cycle/interval time based on uesr input
-let cycle_speed = 150;  //default
+/*
 function fast_cycle_speed(){
   cycle_speed = 150;
 }
@@ -11,33 +10,45 @@ function slow_cycle_speed(){
   cycle_speed = 800;
 }
 
-//Player change cell color
-function change_color(color) {
-  living_color = color;
+ */
+
+let cycle_speed = 150;
+
+//Game speed range slider (ref: https://www.w3schools.com/howto/howto_js_rangeslider.asp)
+const slider = document.getElementById("myRange");
+//const output = document.getElementById("demo");
+//output.textContent = "150"; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  //output.textContent = this.value;
+  cycle_speed = this.value;
 }
 
-/*
-//Changing page background image
-const background_images = ["tidal.jpg", "nebula.png", "leaves.jpeg", "city.webp", "space.jpg"];
-let i = 0;
-let image = null;
-function change_background(){
-  if (i >= background_images.length){
-      i = 0;
+function more_info() {
+    window.open("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life", "_blank");
+}
+
+let n = 0;
+function collapse_border() {
+  let game_div = document.getElementById('game_div');
+  let tbl = game_div.firstChild;
+  if (n === 0) {
+    tbl.style.borderCollapse = "separate";
+    n++;
   }
-  let img_url = "url('../static/images/" + background_images[i++] + "')";
-  document.body.style.backgroundImage = img_url;
-  //document.body.style.backgroundImage = "url('../static/images/tidal.jpg')";
+  else {
+    tbl.style.borderCollapse = "collapse";
+    n = 0;
+  }
 }
-*/
 
-let i = 0;
 function change_background(){
-
-  fetch('https://wikimedia-image-scraper.herokuapp.com/get_image_url/?word=nebula')
-      .then(response => response.json())
+  fetch('http://localhost:9995/request=nebula')
+      .then(response => response)
       .then(data => {
-        document.body.style.backgroundImage = "url('" + data['IMAGE_URL'] + "')";
+        console.log(data)
+        document.body.style.backgroundImage = "url('" + data + "')";
       });
 }
 
@@ -61,10 +72,11 @@ function start_game() {
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
-    let doc_body = document.getElementsByTagName('body')[0];
-    let game_div = document.createElement('div');
-    game_div.id = "game_div";
-    doc_body.appendChild(game_div)
+    //let doc_body = document.getElementsByTagName('body')[0];
+    let game_div = document.getElementById('game_div');
+    //let game_div = document.createElement('div');
+    //game_div.id = "game_div";
+    //doc_body.appendChild(game_div)
     let tbl = document.createElement('TABLE');
     game_div.appendChild(tbl);
     let tbl_body = document.createElement('TBODY');

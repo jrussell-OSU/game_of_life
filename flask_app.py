@@ -157,6 +157,15 @@ class GameOfLife:
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
+    def r_pentomino(self):
+        self._rows = 40
+        self._columns = 40
+        self.create_blank_grid()
+        coordinates = [(15, 14), (16, 14), (15, 15), (15, 16), (14, 15)]
+        for (x, y) in coordinates:
+            self._grid[y][x] = 1
+
+
     def get_json_grid(self):
         coordinates = self.get_all_cell_coords()
         self.set_cell_values(coordinates)
@@ -178,6 +187,8 @@ game.random_seed()
 def home():
     game._grid = []  # every time starting a new game, reset game
     game.random_seed()
+    # game.r_pentomino()
+    # game.penta_decathlon_seed()
     return render_template('index.html')
 
 
