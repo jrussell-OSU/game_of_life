@@ -119,6 +119,7 @@ let game_interval = null;
 
 function stop_game(){
   clearInterval(game_interval);
+  document.getElementById("myRange").disabled = false;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = false;  //disallow start of game until seed chosen
 }
 
@@ -181,6 +182,7 @@ document.getElementById("seed_dropdown").disabled = true;
   //Once initial html table created, modify every x seconds with new cells
   //setInterval(function () {
 function update_game() {
+  document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
