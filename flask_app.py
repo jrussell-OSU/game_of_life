@@ -13,8 +13,8 @@ app = Flask(__name__)
 class GameOfLife:
 
     def __init__(self):
-        self._rows = 40  # CONSTANT: sets how many rows in grid
-        self._columns = 60  # CONSTANT: sets how many columns in grid
+        self._rows = 50  # CONSTANT: sets how many rows in grid
+        self._columns = 50  # CONSTANT: sets how many columns in grid
         self._grid = []  # contains current grid state
         self._saved_grid = []  # grid state prior to cell iteration
         self._cycles = 0  # tracks current number of cycles/intervals
@@ -126,8 +126,6 @@ class GameOfLife:
 # #######################################################################
 
     def random_seed(self):
-        self._rows = 40
-        self._columns = 40
         self.create_blank_grid()
         for row in self._grid:
             for i in range(self._columns):
@@ -137,39 +135,29 @@ class GameOfLife:
 
     def pulsar_seed(self):
         """sets board up as the oscillator known as pulsar (period 3)"""
-        self._rows = 17
-        self._columns = 17
         self.create_blank_grid()
 
     def blinker_seed(self):
-        self._rows = 5
-        self._columns = 5
         self.create_blank_grid()
         coordinates = [(2, 1), (2, 2), (2, 3)]
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
     def glider_seed(self):
-        self._rows = 40
-        self._columns = 40
         self.create_blank_grid()
         coordinates = [(1, 2), (2, 3), (2, 4), (3, 2), (3, 3)]
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
     def penta_decathlon_seed(self):
-        self._rows = 18
-        self._columns = 11
         self.create_blank_grid()
-        coordinates = [(4, 5), (4, 6), (4, 7), (4, 8), (4, 9), (4, 10), (4, 11), (4, 12),
-                       (5, 5), (5, 7), (5, 8), (5, 9), (5, 10), (5, 12),
-                       (6, 5), (6, 6), (6, 7), (6, 8), (6, 9), (6, 10), (6, 11), (6, 12)]
+        coordinates = [(24, 21), (24, 22), (24, 23), (24, 24), (24, 25), (24, 26), (24, 27), (24, 28),
+                       (25, 21), (25, 23), (25, 24), (25, 25), (25, 26), (25, 28),
+                       (26, 21), (26, 22), (26, 23), (26, 24), (26, 25), (26, 26), (26, 27), (26, 28)]
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
     def r_pentomino_seed(self):
-        self._rows = 40
-        self._columns = 40
         self.create_blank_grid()
         coordinates = [(15, 14), (16, 14), (15, 15), (15, 16), (14, 15)]
         for (x, y) in coordinates:
@@ -183,8 +171,6 @@ game.random_seed()
 @app.route("/")
 def home():
     game._grid = []  # every time starting a new game, reset game
-    # .r_pentomino()
-    # game.penta_decathlon_seed()
     return render_template('index.html')
 
 

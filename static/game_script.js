@@ -1,4 +1,6 @@
 
+let cell_size = "10px";
+
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
 
 //Seed starts*********************************
@@ -50,20 +52,24 @@ function collapse_border() {
   let tbl = game_div.firstChild;
   if (n === 0) {
     tbl.style.borderCollapse = "separate";
+    cell_size = "8px";
     n++;
   }
   else {
     tbl.style.borderCollapse = "collapse";
+    cell_size = "10px";
     n = 0;
   }
 }
 
 function change_background(){
   fetch('http://localhost:9995/request=nebula')
-      .then(response => response)
+      .then(response => response.json())
       .then(data => {
-        console.log(data)
-        document.body.style.backgroundImage = "url('" + data + "')";
+        console.log(data["result"])
+        //document.body.style.backgroundImage = "url('" + data["result"] + "')";
+        let div = document.getElementById('game_div');
+        div.style.backgroundImage = "url('" + data["result"] + "')";
       });
 }
 
@@ -106,6 +112,8 @@ document.getElementById("seed_dropdown").disabled = true;
       for (let j = 0; j < curr_row.length; j++) {
         let curr_cell = curr_row[j];
         let cell = document.createElement('TD');
+        cell.style.height = cell_size;
+        cell.style.width = cell_size;
         tbl_row.appendChild(cell);
         if (curr_cell === 0) {
           //create a dead cell
@@ -139,6 +147,8 @@ function update_game() {
       for (let j = 0; j < curr_row.length; j++) {
         let curr_cell = curr_row[j];
         let cell = row_children[j];
+        cell.style.height = cell_size;
+        cell.style.width = cell_size;
         if (curr_cell === 0) {
           //create a dead cell
           cell.className = "dead_cell";  //add to CSS for background color
