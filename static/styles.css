@@ -35,8 +35,10 @@ h1{
 table {
     table-layout: fixed;
     border-collapse: collapse;
+    /*
     height: 320px;
     width: 480px;
+    */
     empty-cells: show;
 }
 
@@ -45,8 +47,8 @@ table {
 }
 
 td {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
 }
 
 /*Range Slider from https://www.w3schools.com/howto/howto_js_rangeslider.asp*/

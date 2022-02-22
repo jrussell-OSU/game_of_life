@@ -165,18 +165,12 @@ class GameOfLife:
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
-
     def get_json_grid(self):
         coordinates = self.get_all_cell_coords()
         self.set_cell_values(coordinates)
         grid_json = json.dumps(self._grid)
         # grid_json = jsonify({"gol_grid": self._grid})
         return grid_json
-
-    def new_background(self):
-        response = requests.get("https://wikimedia-image-scraper.herokuapp.com/get_image_url/?word=stars").json()
-        print("response: ", response)
-        print("url: ", response["IMAGE_URL"])
 
 
 game = GameOfLife()
@@ -186,8 +180,8 @@ game.random_seed()
 @app.route("/")
 def home():
     game._grid = []  # every time starting a new game, reset game
-    game.random_seed()
-    # game.r_pentomino()
+    # game.random_seed()
+    game.r_pentomino()
     # game.penta_decathlon_seed()
     return render_template('index.html')
 

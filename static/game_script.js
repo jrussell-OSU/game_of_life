@@ -1,23 +1,8 @@
 
-/*
-function fast_cycle_speed(){
-  cycle_speed = 150;
-}
-function medium_cycle_speed(){
-  cycle_speed = 500;
-}
-function slow_cycle_speed(){
-  cycle_speed = 800;
-}
-
- */
-
-let cycle_speed = 150;
 
 //Game speed range slider (ref: https://www.w3schools.com/howto/howto_js_rangeslider.asp)
+let cycle_speed = 150;
 const slider = document.getElementById("myRange");
-//const output = document.getElementById("demo");
-//output.textContent = "150"; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
@@ -55,7 +40,7 @@ function change_background(){
 //Change color of living cell on button click
 //Default cell color
 let living_color = "cyan";
-const color_choices = ["limegreen", "red", "pink", "yellow", "black", "white", "cyan"];
+const color_choices = ["limegreen", "red", "pink", "orange", "yellow", "black", "indigo", "white", "gray", "cyan"];
 let c = 0;
 function change_cell_color(){
   if (c >= color_choices.length) {
@@ -64,6 +49,9 @@ function change_cell_color(){
   living_color = color_choices[c++];
 }
 
+function cycle_time(){
+  return cycle_speed
+}
 
 //Run game after the start game button pressed
 function start_game() {
@@ -79,6 +67,8 @@ function start_game() {
     //doc_body.appendChild(game_div)
     let tbl = document.createElement('TABLE');
     game_div.appendChild(tbl);
+    tbl.style.height = gol_grid.length
+    tbl.style.width = gol_grid[0].length
     let tbl_body = document.createElement('TBODY');
     tbl.id = "game_table";
     tbl.appendChild(tbl_body);
