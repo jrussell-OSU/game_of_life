@@ -13,10 +13,11 @@
   <h1>Welcome to Conway's Game of Life!</h1>
 
   <div class="buttons_div">
-    <button id="start_game" class="btn btn-primary" onclick="start_game()">Random Start</button>
+    <button id="start_game" class="btn btn-primary" onclick="start_game()">Start Game</button>
     <button id="seed_dropdown" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button type="button" class="dropdown-item" onclick="random_seed()">random</button>
       <button type="button" class="dropdown-item" onclick="glider_seed()">glider</button>
       <button type="button" class="dropdown-item" onclick="r_pentomino_seed()">r-pentomino</button>
       <button type="button" class="dropdown-item" onclick="penta_decathlon_seed()">penta-decathlon</button>

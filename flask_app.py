@@ -183,7 +183,6 @@ game.random_seed()
 @app.route("/")
 def home():
     game._grid = []  # every time starting a new game, reset game
-    game.random_seed()
     # .r_pentomino()
     # game.penta_decathlon_seed()
     return render_template('index.html')
@@ -194,24 +193,31 @@ def update_grid():
     return game.get_json_grid()
 
 
+@app.route("/random")
+def random_grid():
+    game._grid = []
+    game.random_seed()
+    return render_template('index.html')
+
+
 @app.route("/glider")
 def glider_grid():
-    game.glider_seed()
     game._grid = []
+    game.glider_seed()
     return render_template('index.html')
 
 
 @app.route("/r_pentomino")
 def r_pentomino_grid():
-    game.r_pentomino_seed()
     game._grid = []
+    game.r_pentomino_seed()
     return render_template('index.html')
 
 
 @app.route("/penta_decathlon")
 def penta_decathlon_grid():
-    game.penta_decathlon_seed()
     game._grid = []
+    game.penta_decathlon_seed()
     return render_template('index.html')
 
 

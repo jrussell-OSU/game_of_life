@@ -1,21 +1,33 @@
 
+document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
+
 //Seed starts*********************************
 function glider_seed(){
   document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("start_game").disabled = false;
   fetch('/glider');
-  start_game()
+  //start_game()
+}
+
+function random_seed(){
+  document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("start_game").disabled = false;
+  fetch('/random');
+  //start_game()
 }
 
 function r_pentomino_seed(){
   document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("start_game").disabled = false;
   fetch('/r_pentomino');
-  start_game()
+  //start_game()
 }
 
 function penta_decathlon_seed(){
   document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("start_game").disabled = false;
   fetch('/penta_decathlon');
-  start_game()
+  //start_game()
 }
 //Seed starts END******************************
 
