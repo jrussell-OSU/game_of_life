@@ -37,7 +37,7 @@ const slider = document.getElementById("myRange");
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-  cycle_speed = this.value;
+  cycle_speed = Math.abs(this.value - 750);  //since slider is actually reversed
 }
 
 function more_info() {
