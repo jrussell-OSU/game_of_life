@@ -1,4 +1,23 @@
 
+//Seed starts*********************************
+function glider_seed(){
+  document.getElementById("seed_dropdown").disabled = true;
+  fetch('/glider');
+  start_game()
+}
+
+function r_pentomino_seed(){
+  document.getElementById("seed_dropdown").disabled = true;
+  fetch('/r_pentomino');
+  start_game()
+}
+
+function penta_decathlon_seed(){
+  document.getElementById("seed_dropdown").disabled = true;
+  fetch('/penta_decathlon');
+  start_game()
+}
+//Seed starts END******************************
 
 //Game speed range slider (ref: https://www.w3schools.com/howto/howto_js_rangeslider.asp)
 let cycle_speed = 150;
@@ -6,7 +25,6 @@ const slider = document.getElementById("myRange");
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-  //output.textContent = this.value;
   cycle_speed = this.value;
 }
 
@@ -49,10 +67,6 @@ function change_cell_color(){
   living_color = color_choices[c++];
 }
 
-function cycle_time(){
-  return cycle_speed
-}
-
 //Run game after the start game button pressed
 function start_game() {
   document.getElementById("start_game").disabled = true;
@@ -93,38 +107,40 @@ function start_game() {
       }
     }
   });
-
-  //Once initial html table created, modify every x seconds with new cells
-  setInterval(function () {
-    fetch('/grid').then(response => response.json()).then(gol_grid => {
-      //create table
-      let game_div = document.getElementById('game_div');
-      let tbl = game_div.firstChild;
-      let tbl_body = tbl.firstChild;
-      let rows = gol_grid;
-      var tbl_rows = tbl_body.children;
-      for (let i = 0; i < rows.length; i++) {
-        let tbl_row = tbl_rows[i];
-        let curr_row = rows[i];
-        let row_children = tbl_row.children;
-        for (let j = 0; j < curr_row.length; j++) {
-          let curr_cell = curr_row[j];
-          let cell = row_children[j];
-          if (curr_cell === 0) {
-            //create a dead cell
-            cell.className = "dead_cell";  //add to CSS for background color
-            cell.style.backgroundColor = "transparent";
-          } else {
-            //create a living cell
-            cell.className = "living_cell"; //add to CSS if needed
-            cell.style.backgroundColor = living_color;
-          }
-        }
-      }
-    });
-  }, cycle_speed);
+  const game_interval = setInterval(update_game, cycle_speed);
 
 }
+  //Once initial html table created, modify every x seconds with new cells
+  //setInterval(function () {
+function update_game() {
+  fetch('/grid').then(response => response.json()).then(gol_grid => {
+    //create table
+    let game_div = document.getElementById('game_div');
+    let tbl = game_div.firstChild;
+    let tbl_body = tbl.firstChild;
+    let rows = gol_grid;
+    var tbl_rows = tbl_body.children;
+    for (let i = 0; i < rows.length; i++) {
+      let tbl_row = tbl_rows[i];
+      let curr_row = rows[i];
+      let row_children = tbl_row.children;
+      for (let j = 0; j < curr_row.length; j++) {
+        let curr_cell = curr_row[j];
+        let cell = row_children[j];
+        if (curr_cell === 0) {
+          //create a dead cell
+          cell.className = "dead_cell";  //add to CSS for background color
+          cell.style.backgroundColor = "transparent";
+        } else {
+          //create a living cell
+          cell.className = "living_cell"; //add to CSS if needed
+          cell.style.backgroundColor = living_color;
+        }
+      }
+    }
+  });
+}
+
 
 
 

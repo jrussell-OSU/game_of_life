@@ -111,6 +111,14 @@ class GameOfLife:
             self._grid[y][x] = 0
         self._cycles += 1
 
+    def get_json_grid(self):
+        coordinates = self.get_all_cell_coords()
+        self.set_cell_values(coordinates)
+        grid_json = json.dumps(self._grid)
+        # grid_json = jsonify({"gol_grid": self._grid})
+        return grid_json
+
+
 # ######################################################################
 
 #    SEED GRIDS
@@ -140,8 +148,8 @@ class GameOfLife:
             self._grid[y][x] = 1
 
     def glider_seed(self):
-        self._rows = 6
-        self._columns = 6
+        self._rows = 40
+        self._columns = 40
         self.create_blank_grid()
         coordinates = [(1, 2), (2, 3), (2, 4), (3, 2), (3, 3)]
         for (x, y) in coordinates:
@@ -157,20 +165,13 @@ class GameOfLife:
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
-    def r_pentomino(self):
+    def r_pentomino_seed(self):
         self._rows = 40
         self._columns = 40
         self.create_blank_grid()
         coordinates = [(15, 14), (16, 14), (15, 15), (15, 16), (14, 15)]
         for (x, y) in coordinates:
             self._grid[y][x] = 1
-
-    def get_json_grid(self):
-        coordinates = self.get_all_cell_coords()
-        self.set_cell_values(coordinates)
-        grid_json = json.dumps(self._grid)
-        # grid_json = jsonify({"gol_grid": self._grid})
-        return grid_json
 
 
 game = GameOfLife()
@@ -180,8 +181,8 @@ game.random_seed()
 @app.route("/")
 def home():
     game._grid = []  # every time starting a new game, reset game
-    # game.random_seed()
-    game.r_pentomino()
+    game.random_seed()
+    # .r_pentomino()
     # game.penta_decathlon_seed()
     return render_template('index.html')
 
@@ -189,6 +190,25 @@ def home():
 @app.route("/grid")
 def update_grid():
     return game.get_json_grid()
+
+
+@app.route("/glider")
+def glider_grid():
+    game._grid = []
+    game.glider_seed()
+    return render_template('index.html')
+
+@app.route("/r_pentomino")
+def r_pentomino_grid():
+    game._grid = []
+    game.r_pentomino_seed()
+    return render_template('index.html')
+
+@app.route("/penta_decathlon")
+def penta_decathlon_grid():
+    game._grid = []
+    game.penta_decathlon_seed()
+    return render_template('index.html')
 
 
 if __name__ == '__main__':

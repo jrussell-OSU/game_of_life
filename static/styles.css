@@ -14,14 +14,15 @@ h1{
     text-align: center;
 }
 
-#buttons_div{
+.buttons_div{
     padding: 20px;
     margin: auto;
     /*max-width: 600px;*/
     max-width: 100%;
     text-align: center;
     position: relative;
-    display: inline-block;
+    /*display: inline-block;
+     */
 }
 
 #game_div{
@@ -83,7 +84,8 @@ td {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #04AA6D;
+  /*background: #04AA6D;*/
+    background: palevioletred;
   cursor: pointer;
 }
 
