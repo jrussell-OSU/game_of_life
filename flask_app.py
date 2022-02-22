@@ -118,7 +118,6 @@ class GameOfLife:
         # grid_json = jsonify({"gol_grid": self._grid})
         return grid_json
 
-
 # ######################################################################
 
 #    SEED GRIDS

@@ -1,9 +1,10 @@
 
-let cell_size = "10px";
-
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// SEEDS
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
+document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
 
-//Seed starts*********************************
+
 function glider_seed(){
   document.getElementById("seed_dropdown").disabled = true;
   document.getElementById("start_game").disabled = false;
@@ -31,8 +32,12 @@ function penta_decathlon_seed(){
   fetch('/penta_decathlon');
   //start_game()
 }
-//Seed starts END******************************
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Game speed range slider (ref: https://www.w3schools.com/howto/howto_js_rangeslider.asp)
 let cycle_speed = 150;
 const slider = document.getElementById("myRange");
@@ -41,11 +46,23 @@ const slider = document.getElementById("myRange");
 slider.oninput = function() {
   cycle_speed = Math.abs(this.value - 750);  //since slider is actually reversed
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//More Info link button to wikipedia page
 function more_info() {
     window.open("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life", "_blank");
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Grid on/off button, separates or collapses border between cells
 let n = 0;
 function collapse_border() {
   let game_div = document.getElementById('game_div');
@@ -61,7 +78,12 @@ function collapse_border() {
     n = 0;
   }
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Uses kathleen w.'s image scraper to change the game background image
 function change_background(){
   //fetch('http://localhost:9995/request=nebula')
   fetch('https://kathleen-image-scraper.herokuapp.com/request=nebula')
@@ -73,11 +95,14 @@ function change_background(){
         div.style.backgroundImage = "url('" + data["result"] + "')";
       });
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Change color of living cell on button click
-//Default cell color
-let living_color = "cyan";
-const color_choices = ["limegreen", "red", "pink", "orange", "yellow", "black", "indigo", "white", "gray", "cyan"];
+let living_color = "cyan";  //Default cell color
+const color_choices = ["limegreen", "red", "blue", "pink", "orange", "yellow", "black", "indigo", "white", "gray", "cyan"];
 let c = 0;
 function change_cell_color(){
   if (c >= color_choices.length) {
@@ -85,8 +110,30 @@ function change_cell_color(){
   }
   living_color = color_choices[c++];
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Stop & Continue Game functions
+let game_interval = null;
+
+function stop_game(){
+  clearInterval(game_interval);
+  document.getElementById("continue_button").disabled = false;  //disallow start of game until seed chosen
+}
+
+function continue_game(){
+  game_interval = setInterval(update_game, cycle_speed);
+}
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Run game after the start game button pressed
+let cell_size = "10px";
+
 function start_game() {
   document.getElementById("start_game").disabled = true;
 document.getElementById("seed_dropdown").disabled = true;
@@ -128,12 +175,13 @@ document.getElementById("seed_dropdown").disabled = true;
       }
     }
   });
-  const game_interval = setInterval(update_game, cycle_speed);
+  continue_game();
 
 }
   //Once initial html table created, modify every x seconds with new cells
   //setInterval(function () {
 function update_game() {
+  document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
     let game_div = document.getElementById('game_div');
@@ -163,6 +211,7 @@ function update_game() {
     }
   });
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 

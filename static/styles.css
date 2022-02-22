@@ -3,7 +3,6 @@ body {
     background-color: #141414ff;
     /*background-image: url(images/space.jpg);*/
     background-size: auto;
-
     text-align: center;
 }
 
@@ -41,7 +40,8 @@ h1{
     background-size: cover;
     border-style: solid;
     border-width: 4px;
-    border-color: darkslategray;
+    /*border-color: darkslategray;*/
+    border-color: darkmagenta;
     border-radius: 5px;
 
 }
@@ -66,7 +66,7 @@ td {
     height: 10px;*/
 }
 
-/*Range Slider from https://www.w3schools.com/howto/howto_js_rangeslider.asp*/
+/****Range Slider from https://www.w3schools.com/howto/howto_js_rangeslider.asp****/
 .slidecontainer {
     width: 100%; /* Width of the outside container */
     text-align:center;
@@ -110,3 +110,4 @@ td {
   background: #04AA6D;
   cursor: pointer;
 }
+/**********************************************************************************/
