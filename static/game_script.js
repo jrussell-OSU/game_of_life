@@ -12,40 +12,44 @@ function glider_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
-  fetch('/glider');
-  setTimeout(function(){
-    start_game();
-  }, 200);
+  fetch('/glider').then(response => response.json())
+      .then(data => {
+        start_game();
+      });
 }
 
 function random_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
-  fetch('/random');
-  setTimeout(function(){
-    start_game();
-  }, 200);
+  fetch('/random').then(response => response.json())
+      .then(data => {
+        start_game();
+      });
+  //setTimeout(function(){
+   // start_game();
+  //}, 200);
+
 }
 
 function r_pentomino_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
-  fetch('/r_pentomino');
-  setTimeout(function(){
-    start_game();
-  }, 200);
+  fetch('/r_pentomino').then(response => response.json())
+      .then(data => {
+        start_game();
+      });
 }
 
 function penta_decathlon_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
-  fetch('/penta_decathlon');
-  setTimeout(function(){
-    start_game();
-  }, 200);
+  fetch('/penta_decathlon').then(response => response.json())
+      .then(data => {
+        start_game();
+      });
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
