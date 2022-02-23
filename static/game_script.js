@@ -3,57 +3,20 @@
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// SEEDS
+// Starting seed
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
 document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
 
 
-function glider_seed(){
+function choose_seed(seed){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
-  fetch('/glider').then(response => response.json())
+  fetch(seed).then(response => response.json())
       .then(data => {
         start_game();
       });
 }
-
-function random_seed(){
-  document.getElementById("dropdownMenuButton").disabled = true;
-  document.getElementById("start_game").disabled = false;
-  document.getElementById("color_picker").disabled = false;
-  fetch('/random').then(response => response.json())
-      .then(data => {
-        start_game();
-      });
-  //setTimeout(function(){
-   // start_game();
-  //}, 200);
-
-}
-
-function r_pentomino_seed(){
-  document.getElementById("dropdownMenuButton").disabled = true;
-  document.getElementById("start_game").disabled = false;
-  document.getElementById("color_picker").disabled = false;
-  fetch('/r_pentomino').then(response => response.json())
-      .then(data => {
-        start_game();
-      });
-}
-
-function penta_decathlon_seed(){
-  document.getElementById("dropdownMenuButton").disabled = true;
-  document.getElementById("start_game").disabled = false;
-  document.getElementById("color_picker").disabled = false;
-  fetch('/penta_decathlon').then(response => response.json())
-      .then(data => {
-        start_game();
-      });
-}
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -65,10 +28,6 @@ const slider = document.getElementById("myRange");
 slider.oninput = function() {
   cycle_speed = Math.abs(this.value - 750);  //since slider is actually reversed
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -76,8 +35,6 @@ slider.oninput = function() {
 function more_info() {
     window.open("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life", "_blank");
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -103,8 +60,6 @@ function collapse_border() {
       cells[i].style.width = cell_size;
     }
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -120,7 +75,6 @@ function change_background(){
         div.style.backgroundImage = "url('" + data["result"] + "')";
       });
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 

@@ -19,10 +19,9 @@
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
 
     <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <button type="button" class="dropdown-item" onclick="random_seed()">random</button>
-      <button type="button" class="dropdown-item" onclick="glider_seed()">glider</button>
-      <button type="button" class="dropdown-item" onclick="r_pentomino_seed()">r-pentomino</button>
-      <button type="button" class="dropdown-item" onclick="penta_decathlon_seed()">penta-decathlon</button>
+      <button type="button" class="dropdown-item" onclick="choose_seed('/random')">random</button>
+      <button type="button" class="dropdown-item" onclick="choose_seed('/glider')">glider</button>
+      <button type="button" class="dropdown-item" onclick="choose_seed('/penta_decathlon')">penta-decathlon</button>
     </span>
 
       <button id="pause_button" class="btn btn-primary" onClick="stop_game();">Pause</button>
