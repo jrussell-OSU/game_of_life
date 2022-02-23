@@ -78,7 +78,7 @@ td {
 /* The slider itself */
 .slider {
   -webkit-appearance: none;
-  width: 50%;
+  width: 400px;
   height: 15px;
   border-radius: 5px;
   background: #d3d3d3;
