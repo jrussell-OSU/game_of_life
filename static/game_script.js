@@ -120,7 +120,9 @@ function continue_game(){
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//Run game after the start game button pressed
+//When "Start" button is pressed. Game of life starting seed grid passed from
+//python. Corresponding HTML table is created where each cell of the table
+//represents the living or dead cells given from the python game of life grid
 let cell_size = "10px";
 
 function start_game() {
@@ -171,8 +173,8 @@ document.getElementById("color_picker").disabled = false;
 
 //*****************************************************************************************************
 //CONTINUE GAME
-//
-  //Once initial html table created, modify every x seconds with new cells
+//Only used after initial game table created (see above)
+// Modifies game of life table every (cycle_speed) seconds with new cells
 function update_game() {
   document.getElementById("start_game").disabled = true;
   document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
