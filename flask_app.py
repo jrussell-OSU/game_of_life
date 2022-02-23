@@ -181,28 +181,28 @@ def update_grid():
 def random_grid():
     game._grid = []
     game.random_seed()
-    return render_template('index.html')
+    return json.dumps("Random seed")
 
 
 @app.route("/glider")
 def glider_grid():
     game._grid = []
     game.glider_seed()
-    return render_template('index.html')
+    return json.dumps("Random seed")
 
 
 @app.route("/r_pentomino")
 def r_pentomino_grid():
     game._grid = []
     game.r_pentomino_seed()
-    return render_template('index.html')
+    return json.dumps("Random seed")
 
 
 @app.route("/penta_decathlon")
 def penta_decathlon_grid():
     game._grid = []
     game.penta_decathlon_seed()
-    return render_template('index.html')
+    return json.dumps("Random seed")
 
 
 if __name__ == '__main__':
