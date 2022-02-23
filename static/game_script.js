@@ -11,6 +11,8 @@
 //Disable start and continue buttons until the seed grid is generated
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
 document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
+document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
+
 
 //Takes the flask route name (e.g. "/random"). returns a new starting grid from python
 function choose_seed(seed){
@@ -133,6 +135,8 @@ function start_game() {
  // document.getElementById("start_game").disabled = true;
 document.getElementById("dropdownMenuButton").disabled = true;
 document.getElementById("color_picker").disabled = false;
+document.getElementById("myRange").disabled = false;  //disallow start of game until seed chosen
+
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
