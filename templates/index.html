@@ -13,32 +13,41 @@
   <h1>Welcome to Conway's Game of Life!</h1>
 
   <div class="buttons_div">
-    <button id="start_game" class="btn btn-primary" onclick="start_game()">Start Game</button>
-    <button id="seed_dropdown" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+
+    <button id="start_game" class="btn btn-primary" onclick="continue_game()">Start Game</button>
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <button type="button" class="dropdown-item" onclick="random_seed()">random</button>
       <button type="button" class="dropdown-item" onclick="glider_seed()">glider</button>
       <button type="button" class="dropdown-item" onclick="r_pentomino_seed()">r-pentomino</button>
       <button type="button" class="dropdown-item" onclick="penta_decathlon_seed()">penta-decathlon</button>
-      </div>
+
+    </div>
     <button id="pause_button" class="btn btn-primary" onClick="stop_game();">Pause</button>
     <button id="continue_button" class="btn btn-primary" onClick="continue_game();">Continue</button>
     <button class="btn btn-primary" onClick="window.location.reload();">Reset</button>
-    <!--<button class="btn btn-primary" onClick="window.location.reload();">Reset</button>-->
-    <!--<button class="btn btn-primary" onClick="stop_game();">Stop/Reset</button>-->
+
     <br><br>
+
+    <label for="color_picker">Cell Color</label>
+    <input id="color_picker" type="color" value="#E1DD56">
     <button id="change_background" class="btn btn-secondary" onclick="change_background()">Change Background</button>
-    <button id="change_cell_color" class="btn btn-secondary" onclick="change_cell_color()">Cell Color</button>
+    <!--<button id="change_cell_color" class="btn btn-secondary" onclick="change_cell_color()">Cell Color</button>-->
     <!--<button hidden id="change_cycle_speed" onclick="change_cycle_speed()">Cycle Speed</button>-->
-    <button id="change_cell_color" class="btn btn-secondary" onclick="collapse_border()">Grid on/off</button>
+    <button id="grid_collapse" class="btn btn-secondary" onclick="collapse_border()">Grid</button>
     <button onClick="more_info()" class="btn btn-info">More Info</button>
+    <span class="backgroundtooltiptext">Change may take a few seconds.</span>
     </div>
-    <div class="slidecontainer">
+
+  <div class="slidecontainer">
       <label for="myRange">Slower</label>
       <input type="range" min="50" max="800" value="600" class="slider" id="myRange">
       <label for="myRange">Faster</label>
-`   </div>
+     <span class="slidertooltiptext">Speed slider disabled while game active.</span>
+</div>
+
   <br><br>
 
   <div id="game_div"></div>

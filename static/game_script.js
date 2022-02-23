@@ -6,31 +6,31 @@ document.getElementById("continue_button").disabled = true;  //disallow start of
 
 
 function glider_seed(){
-  document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   fetch('/glider');
-  //start_game()
+  start_game()
 }
 
 function random_seed(){
-  document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   fetch('/random');
-  //start_game()
+  start_game()
 }
 
 function r_pentomino_seed(){
-  document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   fetch('/r_pentomino');
-  //start_game()
+  start_game()
 }
 
 function penta_decathlon_seed(){
-  document.getElementById("seed_dropdown").disabled = true;
+  document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
   fetch('/penta_decathlon');
-  //start_game()
+  start_game()
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -68,15 +68,20 @@ function collapse_border() {
   let game_div = document.getElementById('game_div');
   let tbl = game_div.firstChild;
   if (n === 0) {
-    tbl.style.borderCollapse = "separate";
     cell_size = "8px";
+    tbl.style.borderCollapse = "separate";
     n++;
   }
   else {
     tbl.style.borderCollapse = "collapse";
     cell_size = "10px";
     n = 0;
-  }
+    }
+  let cells = document.querySelectorAll('td');
+    for(let i = 0; i < cells.length; i++){
+      cells[i].style.height = cell_size;
+      cells[i].style.width = cell_size;
+    }
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -101,15 +106,33 @@ function change_background(){
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Change color of living cell on button click
-let living_color = "cyan";  //Default cell color
-const color_choices = ["limegreen", "red", "blue", "pink", "orange", "yellow", "black", "indigo", "white", "gray", "cyan"];
+let living_color = "#E1DD56";  //Default cell color
+const color_picker = document.getElementById("color_picker");
+
+color_picker.oninput = function() {
+  living_color = this.value;
+let cells = document.querySelectorAll('td.living_cell');
+for(let i = 0; i < cells.length; i++){
+  cells[i].style.backgroundColor = living_color;
+  }
+}
+
+
+/*const color_choices = ["cyan", "limegreen", "red", "blue", "pink", "orange", "gold", "yellow", "black", "indigo", "gray", "white"];
 let c = 0;
 function change_cell_color(){
   if (c >= color_choices.length) {
     c = 0;
   }
   living_color = color_choices[c++];
-}
+  let cells = document.querySelectorAll('td.living_cell');
+  for(let i = 0; i < cells.length; i++){
+    cells[i].style.backgroundColor = living_color;
+    }
+}*/
+
+
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -121,10 +144,12 @@ function stop_game(){
   clearInterval(game_interval);
   document.getElementById("myRange").disabled = false;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = false;  //disallow start of game until seed chosen
+  document.getElementById("pause_button").disabled = true;
 }
 
 function continue_game(){
   game_interval = setInterval(update_game, cycle_speed);
+  document.getElementById("pause_button").disabled = false;
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -136,8 +161,8 @@ function continue_game(){
 let cell_size = "10px";
 
 function start_game() {
-  document.getElementById("start_game").disabled = true;
-document.getElementById("seed_dropdown").disabled = true;
+ // document.getElementById("start_game").disabled = true;
+document.getElementById("dropdownMenuButton").disabled = true;
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
@@ -176,12 +201,17 @@ document.getElementById("seed_dropdown").disabled = true;
       }
     }
   });
-  continue_game();
-
+  //continue_game();
 }
+
+
+//*****************************************************************************************************
+//CONTINUE GAME
+//
   //Once initial html table created, modify every x seconds with new cells
   //setInterval(function () {
 function update_game() {
+  document.getElementById("start_game").disabled = true;
   document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
   fetch('/grid').then(response => response.json()).then(gol_grid => {

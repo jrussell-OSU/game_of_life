@@ -3,6 +3,7 @@ body {
     background-color: #141414ff;
     /*background-image: url(images/space.jpg);*/
     background-size: auto;
+    background-image: url(images/space1.jpeg);
     text-align: center;
 }
 
@@ -35,7 +36,8 @@ h1{
     margin: 0 auto;
     display: inline-block;
     background-color: black;
-    background-image: url(images/space.jpg);
+    /*background-image: url(images/space.jpg);*/
+    background-image: url(images/nebula1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     border-style: solid;
@@ -111,4 +113,36 @@ td {
   background: #04AA6D;
   cursor: pointer;
 }
+/**********************************************************************************/
+
+
+
+/**********************************************************************************/
+/*Tooltips    ref: https://www.w3schools.com/css/css_tooltip.asp*/
+
+
+/* Tooltip text */
+.backgroundtooltiptext, .slidertooltiptext {
+  visibility: hidden;
+  /*width: 120px;*/
+  background-color: #818589;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.slidecontainer:hover .slidertooltiptext {
+  visibility: visible;
+}
+
+#change_background:hover .backgroundtooltiptext{
+    visibility: visible;
+}
+
 /**********************************************************************************/

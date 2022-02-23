@@ -158,7 +158,7 @@ class GameOfLife:
 
     def r_pentomino_seed(self):
         self.create_blank_grid()
-        coordinates = [(15, 14), (16, 14), (15, 15), (15, 16), (14, 15)]
+        coordinates = [(24, 25), (25, 25), (26, 25), (26, 26), (24, 24)]
         for (x, y) in coordinates:
             self._grid[y][x] = 1
 
