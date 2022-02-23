@@ -81,7 +81,7 @@ function change_background(){
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Change color of living cell on button click
 document.getElementById("color_picker").disabled = true;
-let living_color = "white";  //Default cell color
+let living_color = "#1FE045";  //Default cell color
 const color_picker = document.getElementById("color_picker");
 
 color_picker.oninput = function() {
