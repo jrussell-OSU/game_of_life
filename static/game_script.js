@@ -1,13 +1,18 @@
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Global variables
+
 
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Starting seed
+
+//Disable start and continue buttons until the seed grid is generated
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
 document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
 
-
+//Takes the flask route name (e.g. "/random"). returns a new starting grid from python
 function choose_seed(seed){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
@@ -39,6 +44,7 @@ function more_info() {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Grid on/off button, separates or collapses border between cells
+//To keep same table size, cells with the borders are also shrunk slightly
 let n = 0;
 
 function collapse_border() {
@@ -65,12 +71,14 @@ function collapse_border() {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Uses kathleen w.'s image scraper to change the game background image
 function change_background(){
-  //fetch('http://localhost:9995/request=nebula')
+  //fetch('http://localhost:9995/request=nebula')  //when run locally
+
+  //Can fetch images based on given word, put any word after "/request="
+  //to get a related random (small) image
   fetch('https://kathleen-image-scraper.herokuapp.com/request=nebula')
       .then(response => response.json())
       .then(data => {
         console.log(data["result"])
-        //document.body.style.backgroundImage = "url('" + data["result"] + "')";
         let div = document.getElementById('game_div');
         div.style.backgroundImage = "url('" + data["result"] + "')";
       });
@@ -79,7 +87,7 @@ function change_background(){
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//Change color of living cell on button click
+//Change color of living cell based on color picker input
 document.getElementById("color_picker").disabled = true;
 let living_color = "#1FE045";  //Default cell color
 const color_picker = document.getElementById("color_picker");
@@ -91,8 +99,6 @@ for(let i = 0; i < cells.length; i++){
   cells[i].style.backgroundColor = living_color;
   }
 }
-
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -110,8 +116,6 @@ function continue_game(){
   game_interval = setInterval(update_game, cycle_speed);
   document.getElementById("pause_button").disabled = false;
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 
 
 
@@ -169,13 +173,14 @@ document.getElementById("color_picker").disabled = false;
 //CONTINUE GAME
 //
   //Once initial html table created, modify every x seconds with new cells
-  //setInterval(function () {
 function update_game() {
   document.getElementById("start_game").disabled = true;
   document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
   fetch('/grid').then(response => response.json()).then(gol_grid => {
-    //create table
+
+    //Iterate through the given current grid state from python, for each cell
+    //turn the corresponding html table cell "on" or "off" (color or transparent)
     let game_div = document.getElementById('game_div');
     let tbl = game_div.firstChild;
     let tbl_body = tbl.firstChild;
