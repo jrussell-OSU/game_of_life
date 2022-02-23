@@ -163,12 +163,10 @@ class GameOfLife:
 
 
 game = GameOfLife()
-# game.random_seed()
 
 
 @app.route("/")
 def home():
-    game = GameOfLife()
     game._grid = []  # every time starting a new game, reset game
     return render_template('index.html')
 

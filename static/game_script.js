@@ -13,7 +13,9 @@ function glider_seed(){
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
   fetch('/glider');
-  start_game()
+  setTimeout(function(){
+    start_game();
+  }, 200);
 }
 
 function random_seed(){
@@ -21,7 +23,9 @@ function random_seed(){
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
   fetch('/random');
-  start_game()
+  setTimeout(function(){
+    start_game();
+  }, 200);
 }
 
 function r_pentomino_seed(){
@@ -29,7 +33,9 @@ function r_pentomino_seed(){
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
   fetch('/r_pentomino');
-  start_game()
+  setTimeout(function(){
+    start_game();
+  }, 200);
 }
 
 function penta_decathlon_seed(){
@@ -37,7 +43,9 @@ function penta_decathlon_seed(){
   document.getElementById("start_game").disabled = false;
   document.getElementById("color_picker").disabled = false;
   fetch('/penta_decathlon');
-  start_game()
+  setTimeout(function(){
+    start_game();
+  }, 200);
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -125,22 +133,6 @@ for(let i = 0; i < cells.length; i++){
   cells[i].style.backgroundColor = living_color;
   }
 }
-
-
-/*const color_choices = ["cyan", "limegreen", "red", "blue", "pink", "orange", "gold", "yellow", "black", "indigo", "gray", "white"];
-let c = 0;
-function change_cell_color(){
-  if (c >= color_choices.length) {
-    c = 0;
-  }
-  living_color = color_choices[c++];
-  let cells = document.querySelectorAll('td.living_cell');
-  for(let i = 0; i < cells.length; i++){
-    cells[i].style.backgroundColor = living_color;
-    }
-}*/
-
-
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
