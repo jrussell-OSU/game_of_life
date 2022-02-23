@@ -31,7 +31,9 @@ const slider = document.getElementById("myRange");
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
+  pause_game();
   cycle_speed = Math.abs(this.value - 750);  //since slider is actually reversed
+
 }
 
 
@@ -99,7 +101,7 @@ color_picker.oninput = function() {
   for(let i = 0; i < cells.length; i++){
   cells[i].style.backgroundColor = living_color;
   }
-  continue_game();  //resume game once color changed
+  //continue_game();  //resume game once color changed
 }
 
 
@@ -179,7 +181,7 @@ document.getElementById("color_picker").disabled = false;
 // Modifies game of life table every (cycle_speed) seconds with new cells
 function update_game() {
   document.getElementById("start_game").disabled = true;
-  document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
+  //document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
   fetch('/grid').then(response => response.json()).then(gol_grid => {
 
