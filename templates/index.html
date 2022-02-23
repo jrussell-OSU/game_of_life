@@ -10,21 +10,21 @@
   </head>
   <body>
   <br>
-  <h1>Welcome to Conway's Game of Life!</h1>
-
+  <h1>Conway's Game of Life</h1>
+  <h6>by Jacob Russell</h6>
   <div class="buttons_div">
 
     <button id="start_game" class="btn btn-primary" onclick="continue_game()">Start Game</button>
     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button type="button" class="dropdown-item" onclick="random_seed()">random</button>
+    <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <button type="button" class="dropdown-item" onclick="random_seed()">random</button>
       <button type="button" class="dropdown-item" onclick="glider_seed()">glider</button>
       <button type="button" class="dropdown-item" onclick="r_pentomino_seed()">r-pentomino</button>
       <button type="button" class="dropdown-item" onclick="penta_decathlon_seed()">penta-decathlon</button>
+    </span>
 
-    </div>
     <button id="pause_button" class="btn btn-primary" onClick="stop_game();">Pause</button>
     <button id="continue_button" class="btn btn-primary" onClick="continue_game();">Continue</button>
     <button class="btn btn-primary" onClick="window.location.reload();">Reset</button>
@@ -51,15 +51,7 @@
   <br><br>
 
   <div id="game_div"></div>
-    <!--
-    <p>Choose cycle speed prior to starting game:</p>
-    <input type="radio" id="fast" name="speed" value="150" onClick="fast_cycle_speed();" checked>
-    <label for="fast">Fast Speed</label>
-    <input type="radio" id="medium" name="speed" value="500" onClick="medium_cycle_speed();">
-    <label for="medium">Medium Speed</label>
-    <input type="radio" id="slow" name="speed" value="1000" onClick="slow_cycle_speed();">
-    <label for="slow">Slow Speed</label>
-    -->
+
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

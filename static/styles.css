@@ -7,7 +7,7 @@ body {
     text-align: center;
 }
 
-label, h1, p {
+label, h1, p, h6 {
     color: #E3E4E4;
     /*color:#85144b;*/
 }

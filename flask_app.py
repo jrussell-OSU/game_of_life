@@ -3,9 +3,8 @@
 # Description: My version of Conway's Game of Life
 
 import random
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 import json
-import requests
 
 app = Flask(__name__)
 
@@ -164,7 +163,7 @@ class GameOfLife:
 
 
 game = GameOfLife()
-game.random_seed()
+# game.random_seed()
 
 
 @app.route("/")

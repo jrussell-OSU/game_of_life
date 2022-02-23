@@ -1,4 +1,7 @@
 
+
+
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // SEEDS
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
@@ -8,6 +11,7 @@ document.getElementById("continue_button").disabled = true;  //disallow start of
 function glider_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
+  document.getElementById("color_picker").disabled = false;
   fetch('/glider');
   start_game()
 }
@@ -15,6 +19,7 @@ function glider_seed(){
 function random_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
+  document.getElementById("color_picker").disabled = false;
   fetch('/random');
   start_game()
 }
@@ -22,6 +27,7 @@ function random_seed(){
 function r_pentomino_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
+  document.getElementById("color_picker").disabled = false;
   fetch('/r_pentomino');
   start_game()
 }
@@ -29,6 +35,7 @@ function r_pentomino_seed(){
 function penta_decathlon_seed(){
   document.getElementById("dropdownMenuButton").disabled = true;
   document.getElementById("start_game").disabled = false;
+  document.getElementById("color_picker").disabled = false;
   fetch('/penta_decathlon');
   start_game()
 }
@@ -64,6 +71,7 @@ function more_info() {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Grid on/off button, separates or collapses border between cells
 let n = 0;
+
 function collapse_border() {
   let game_div = document.getElementById('game_div');
   let tbl = game_div.firstChild;
@@ -106,7 +114,8 @@ function change_background(){
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Change color of living cell on button click
-let living_color = "#E1DD56";  //Default cell color
+document.getElementById("color_picker").disabled = true;
+let living_color = "white";  //Default cell color
 const color_picker = document.getElementById("color_picker");
 
 color_picker.oninput = function() {
@@ -163,6 +172,7 @@ let cell_size = "10px";
 function start_game() {
  // document.getElementById("start_game").disabled = true;
 document.getElementById("dropdownMenuButton").disabled = true;
+document.getElementById("color_picker").disabled = false;
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
@@ -220,7 +230,7 @@ function update_game() {
     let tbl = game_div.firstChild;
     let tbl_body = tbl.firstChild;
     let rows = gol_grid;
-    var tbl_rows = tbl_body.children;
+    let tbl_rows = tbl_body.children;
     for (let i = 0; i < rows.length; i++) {
       let tbl_row = tbl_rows[i];
       let curr_row = rows[i];
@@ -244,6 +254,7 @@ function update_game() {
   });
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 
 
