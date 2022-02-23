@@ -93,19 +93,21 @@ let living_color = "#1FE045";  //Default cell color
 const color_picker = document.getElementById("color_picker");
 
 color_picker.oninput = function() {
+  pause_game();   //pause game while changing color
   living_color = this.value;
-let cells = document.querySelectorAll('td.living_cell');
-for(let i = 0; i < cells.length; i++){
+  let cells = document.querySelectorAll('td.living_cell');
+  for(let i = 0; i < cells.length; i++){
   cells[i].style.backgroundColor = living_color;
   }
+  continue_game();  //resume game once color changed
 }
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//Stop & Continue Game functions
+//Pause & Continue Game functions
 let game_interval = null;
 
-function stop_game(){
+function pause_game(){
   clearInterval(game_interval);
   document.getElementById("myRange").disabled = false;  //disallow start of game until seed chosen
   document.getElementById("continue_button").disabled = false;  //disallow start of game until seed chosen
