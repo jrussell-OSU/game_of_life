@@ -88,6 +88,40 @@ function change_background(){
       });
 }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//More Info Modal display using Kyle's Microservice
+//ref: https://www.w3schools.com/howto/howto_css_modals.asp
+
+let modal = document.getElementById("more_info");
+let btn = document.getElementById("more_info_button");
+let span = document.getElementsByClassName("close")[0];
+let info_url = "https://wiki-scraper-starfish.herokuapp.com/wiki/?search=Conway%27s_Game_of_Life"
+
+//Populate the text from Kyle's microservice
+$.getJSON(info_url, function(data){
+  let info_text = document.getElementById("more_info_text");
+  info_text.textContent = data["Conway's Game of Life"];
+});
+
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+}
+
+
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -140,11 +174,7 @@ document.getElementById("myRange").disabled = false;  //disallow start of game u
   //first, create initial table grid for the game
   fetch('/grid').then(response => response.json()).then(gol_grid => {
     //create table
-    //let doc_body = document.getElementsByTagName('body')[0];
     let game_div = document.getElementById('game_div');
-    //let game_div = document.createElement('div');
-    //game_div.id = "game_div";
-    //doc_body.appendChild(game_div)
     let tbl = document.createElement('TABLE');
     game_div.appendChild(tbl);
     tbl.style.height = gol_grid.length
@@ -163,6 +193,7 @@ document.getElementById("myRange").disabled = false;  //disallow start of game u
         cell.style.height = cell_size;
         cell.style.width = cell_size;
         tbl_row.appendChild(cell);
+
         if (curr_cell === 0) {
           //create a dead cell
           cell.className = "dead_cell";  //add to CSS for background color
@@ -175,7 +206,6 @@ document.getElementById("myRange").disabled = false;  //disallow start of game u
       }
     }
   });
-  //continue_game();
 }
 
 
@@ -205,12 +235,13 @@ function update_game() {
         let cell = row_children[j];
         cell.style.height = cell_size;
         cell.style.width = cell_size;
+
         if (curr_cell === 0) {
-          //create a dead cell
+          //dead cell
           cell.className = "dead_cell";  //add to CSS for background color
           cell.style.backgroundColor = "transparent";
         } else {
-          //create a living cell
+          //living cell
           cell.className = "living_cell"; //add to CSS if needed
           cell.style.backgroundColor = living_color;
         }
