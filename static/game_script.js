@@ -1,18 +1,11 @@
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//Global variables
-
-
-
-
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// Starting seed
+// Starting seeds
 
 //Disable start and continue buttons until the seed grid is generated
 document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
 document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
 document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
-
 
 //Takes the flask route name (e.g. "/random"). returns a new starting grid from python
 function choose_seed(seed){
@@ -25,7 +18,6 @@ function choose_seed(seed){
       });
 }
 
-
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Game speed range slider (ref: https://www.w3schools.com/howto/howto_js_rangeslider.asp)
 let cycle_speed = 150;
@@ -37,14 +29,6 @@ slider.oninput = function() {
   cycle_speed = Math.abs(this.value - 750);  //since slider is actually reversed
 
 }
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//More Info link button to wikipedia page
-function more_info() {
-    window.open("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life", "_blank");
-}
-
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Grid on/off button, separates or collapses border between cells
@@ -70,7 +54,6 @@ function collapse_border() {
       cells[i].style.width = cell_size;
     }
 }
-
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Uses kathleen w.'s image scraper to change the game background image
@@ -103,7 +86,6 @@ $.getJSON(info_url, function(data){
   info_text.textContent = data["Conway's Game of Life"];
 });
 
-
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
   modal.style.display = "block";
@@ -121,11 +103,9 @@ window.onclick = function(event) {
   }
 }
 
-
-
-
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Change color of living cell based on color picker input
+
 document.getElementById("color_picker").disabled = true;
 let living_color = "#2ACB70";  //Default cell color
 const color_picker = document.getElementById("color_picker");
@@ -140,9 +120,9 @@ color_picker.oninput = function() {
   //continue_game();  //resume game once color changed
 }
 
-
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Pause & Continue Game functions
+
 let game_interval = null;
 
 function pause_game(){
@@ -156,8 +136,6 @@ function continue_game(){
   game_interval = setInterval(update_game, cycle_speed);
   document.getElementById("pause_button").disabled = false;
 }
-
-
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //When "Start" button is pressed. Game of life starting seed grid passed from
@@ -208,7 +186,6 @@ document.getElementById("myRange").disabled = false;  //disallow start of game u
   });
 }
 
-
 //*****************************************************************************************************
 //CONTINUE GAME
 //Only used after initial game table created (see above)
@@ -249,6 +226,7 @@ function update_game() {
     }
   });
 }
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
