@@ -1,0 +1,17 @@
+cachelib
+certifi
+charset-normalizer
+click
+docopt
+Flask
+Flask-Session
+gunicorn
+idna
+itsdangerous
+Jinja2
+MarkupSafe
+pipreqs
+requests
+urllib3
+Werkzeug
+yarg
