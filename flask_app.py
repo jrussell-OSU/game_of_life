@@ -8,13 +8,11 @@ from flask_session import Session
 import json
 
 app = Flask(__name__)
-app.secret_key = 'SECRET_KEY'
-SESSION_TYPE = 'redis'
-SESSION_COOKIE_SECURE = True
-SESSION_COOKE_NAME = 'game_of_life'
-SESSION_PERMANENT = False
-app.config.from_object(__name__)
-Session(app)
+sess = Session()
+app.config.from_object("config.ProductionConfig")
+# app.config.from_object("config.DevelopmentConfig")
+# app.config.from_object("config.TestingConfig")
+sess.init_app(app)
 
 
 class GameOfLife:
@@ -22,17 +20,19 @@ class GameOfLife:
     def __init__(self):
         self._rows = 50  # CONSTANT: sets how many rows in grid
         self._columns = 50  # CONSTANT: sets how many columns in grid
-        self._grid = []  # contains current grid state
-        self._saved_grid = []  # grid state prior to cell iteration
+        # self._grid = []  # contains current grid state
+        # self._blank_grid = []
+        # self._saved_grid = []  # grid state prior to cell iteration
         self._probability = 6  # CONSTANT: odds of cell being alive. lower number == higher chance
-        self._display_grid = []
 
     def create_blank_grid(self):
         temp = []
+        grid = []
         for i in range(self._columns):
             temp.append(0)
         for p in range(self._rows):
-            self._grid.append(temp[:])
+            grid.append(temp[:])
+        return grid
 
     def get_all_cell_coords(self):
         """returns list of tuples of every coordinate on grid"""
@@ -42,18 +42,18 @@ class GameOfLife:
                 coords.append((x, y))
         return coords
 
-    def total_neighbors(self, coords):
+    def total_neighbors(self, coords, grid):
         """takes cell coords and returns total number of "living" (1) neighbors"""
         (x, y) = coords
         neighbors = 0
         for i in range(-1, 2):
             for p in range(-1, 2):
-                neighbors += self._grid[(y+p) % self._rows][(x+i) % self._columns]
-        if self._grid[y][x] == 1:
+                neighbors += grid[(y+p) % self._rows][(x+i) % self._columns]
+        if grid[y][x] == 1:
             neighbors -= 1  # don't count own cell as a neighbor
         return neighbors
 
-    def set_cell_values(self, coordinates):
+    def set_cell_values(self, coordinates, grid):
         """
         takes list of cell coords and sets 1 or 0 based on rules
         Rules: If living cell has <2 or >3 neighbors, cell dies (0).
@@ -62,24 +62,18 @@ class GameOfLife:
         live = []  # all cells set to flip to 1
         die = []  # all cells set to flip to 0
         for (x, y) in coordinates:
-            cell = self._grid[y][x]
-            neighbors = self.total_neighbors((x, y))
+            cell = grid[y][x]
+            neighbors = self.total_neighbors((x, y), grid)
             if cell == 0 and neighbors == 3:  # bring dead cell to life
                 live.append((x, y))
             else:
                 if neighbors < 2 or neighbors > 3:  # kill living cell
                     die.append((x, y))
         for (x, y) in live:
-            self._grid[y][x] = 1
+            grid[y][x] = 1
         for (x, y) in die:
-            self._grid[y][x] = 0
-
-    def get_json_grid(self):
-        """Returns game grid as JSON"""
-        coordinates = self.get_all_cell_coords()
-        self.set_cell_values(coordinates)
-        grid_json = json.dumps(self._grid)
-        return grid_json
+            grid[y][x] = 0
+        return grid
 
 # ######################################################################
 #    SEED STARTER GRIDS
@@ -88,78 +82,47 @@ class GameOfLife:
 #    interesting results.
 # #######################################################################
 
-    def random_seed(self):
-        self.create_blank_grid()
-        for row in self._grid:
+    def random_seed(self, grid):
+        # self.create_blank_grid()
+        for row in grid:
             for i in range(self._columns):
                 rand_num = random.randint(1, self._probability)
                 if rand_num > self._probability - 1:
                     row[i] = 1
-
-    def glider_seed(self):
-        self.create_blank_grid()
-        coordinates = [(1, 2), (2, 3), (2, 4), (3, 2), (3, 3)]
-        for (x, y) in coordinates:
-            self._grid[y][x] = 1
-
-    def penta_decathlon_seed(self):
-        self.create_blank_grid()
-        coordinates = [(24, 21), (24, 22), (24, 23), (24, 24), (24, 25), (24, 26), (24, 27), (24, 28),
-                       (25, 21), (25, 23), (25, 24), (25, 25), (25, 26), (25, 28),
-                       (26, 21), (26, 22), (26, 23), (26, 24), (26, 25), (26, 26), (26, 27), (26, 28)]
-        for (x, y) in coordinates:
-            self._grid[y][x] = 1
+        return grid
 
 
 game = GameOfLife()
 
 
-@app.route('/set/')
-def set_key():
-    session['key'] = 'value'
-    return 'ok'
-
-
-@app.route('/get/')
-def get_key():
-    return session.get('key', 'not set')
-
-
 # Index
 @app.route("/")
 def home():
-    game._grid = []  # every time starting a new game, reset game
     return render_template('index.html')
+
+
+@app.route("/game_of_life.html")
+def game_of_life():
+    session['grid'] = game.create_blank_grid()
+    return render_template('game_of_life.html')
 
 
 # Called at intervals by javascript to update the game board cells
 @app.route("/grid")
 def update_grid():
-    return game.get_json_grid()
+    grid = session['grid']
+    coords = game.get_all_cell_coords()
+    session['game'] = game.set_cell_values(coords, grid)
+    return json.dumps(session['game'])
 
 
 # Below are three seed starting choices
 @app.route("/random")
 def random_grid():
-    game._grid = []
-    game.random_seed()
+    grid = session['grid']
+    session['grid'] = game.random_seed(grid)
     return json.dumps("Random seed")
 
 
-@app.route("/glider")
-def glider_grid():
-    game._grid = []
-    game.glider_seed()
-    return json.dumps("Glider seed")
-
-
-@app.route("/penta_decathlon")
-def penta_decathlon_grid():
-    game._grid = []
-    game.penta_decathlon_seed()
-    return json.dumps("Glider seed")
-
-"""
 if __name__ == '__main__':
     app.run()
-"""

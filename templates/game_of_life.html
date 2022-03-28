@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Game of Life</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/game_of_life_styles.css">
+  </head>
+
+  <body class="game_of_life">
+  <br>
+  <h1>Conway's Game of Life</h1>
+  <div class="buttons_div">
+
+    <!--Primary Buttons-->
+      <button id="start_game" class="btn btn-primary" onclick="continue_game()">Start Game</button>
+      <button class="btn btn-primary dropdown-toggle" title="Choose seed before game will start" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
+    <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <button type="button" class="dropdown-item" onclick="choose_seed('/random')">random</button>
+      <!--<button type="button" class="dropdown-item" onclick="choose_seed('/glider')">glider</button>-->
+      <!--<button type="button" class="dropdown-item" onclick="choose_seed('/penta_decathlon')">penta-decathlon</button>-->
+    </span>
+
+      <button id="pause_button" class="btn btn-primary" onClick="pause_game();">Pause</button>
+      <button id="continue_button" class="btn btn-primary" onClick="continue_game();">Continue</button>
+      <button class="btn btn-primary" onClick="window.location.reload();">Reset</button>
+
+      <br><br>
+
+    <!--Secondary Buttons-->
+      <label for="color_picker">Cell Color</label>
+      <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#2ACB70">
+      <button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
+              onclick="change_background()">Change Background</button>
+      <button id="grid_collapse" class="btn btn-secondary" onclick="collapse_border()">Grid</button>
+      <button id="more_info_button" class="btn btn-info">More Info</button>
+      <span class="backgroundtooltiptext">Change may take a few seconds.</span>
+    </div>
+
+  <!--Game of Life Wiki More Info modal button, uses teammate's microservice-->
+  <!--ref: https://www.w3schools.com/howto/howto_css_modals.asp-->
+   <div id="more_info" class="modal">
+     <div id="more_info_modal">
+      <span class="close">&times;</span>
+      <p id="more_info_text">Some text in the Modal..</p>
+     </div>
+   </div>
+
+  <!--Speed slider bar-->
+  <div class="slidecontainer">
+      <label for="myRange">Slower</label>
+      <input title="Disabled until game start. Game will pause if speed changed." type="range" min="50" max="800" value="600" class="slider" id="myRange">
+      <label for="myRange">Faster</label>
+  </div>
+
+
+  <br><br>
+
+  <div id="game_div"></div>
+
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="../static/game_of_life_script.js"></script>
+</html>
