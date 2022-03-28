@@ -3,10 +3,18 @@
 # Description: My version of Conway's Game of Life
 
 import random
-from flask import Flask, render_template
+from flask import Flask, render_template, session
+from flask_session import Session
 import json
 
 app = Flask(__name__)
+app.secret_key = 'SECRET_KEY'
+SESSION_TYPE = 'redis'
+SESSION_COOKIE_SECURE = True
+SESSION_COOKE_NAME = 'game_of_life'
+SESSION_PERMANENT = False
+app.config.from_object(__name__)
+Session(app)
 
 
 class GameOfLife:
@@ -106,6 +114,17 @@ class GameOfLife:
 game = GameOfLife()
 
 
+@app.route('/set/')
+def set_key():
+    session['key'] = 'value'
+    return 'ok'
+
+
+@app.route('/get/')
+def get_key():
+    return session.get('key', 'not set')
+
+
 # Index
 @app.route("/")
 def home():
@@ -140,6 +159,7 @@ def penta_decathlon_grid():
     game.penta_decathlon_seed()
     return json.dumps("Glider seed")
 
-
+"""
 if __name__ == '__main__':
     app.run()
+"""
