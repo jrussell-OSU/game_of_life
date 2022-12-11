@@ -1,0 +1,193 @@
+
+body {
+    background-color: #141414ff;
+    /*background-image: url(images/space.jpg);*/
+    background-size: auto;
+    background-image: url(images/space1.jpeg);
+    text-align: center;
+}
+
+label, h1, p, h6 {
+    color: #E3E4E4;
+    /*color:#85144b;*/
+}
+
+h1{
+    text-align: center;
+}
+
+.buttons_div{
+    padding: 20px;
+    margin: auto;
+    /*max-width: 600px;*/
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+    /*display: inline-block;
+     */
+}
+
+#game_div{
+    position: relative;
+    height: 508px;
+    width: 508px;
+    text-align: center;
+    /*max-width: 100%;*/
+    margin: 0 auto;
+    display: inline-block;
+    background-color: black;
+    /*background-image: url(images/space.jpg);*/
+    background-image: url(images/nebula1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-style: solid;
+    border-width: 4px;
+    /*border-color: darkslategray;*/
+    border-color: darkmagenta;
+    border-radius: 5px;
+
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: auto;
+    /*
+    height: 320px;
+    width: 480px;
+    */
+    empty-cells: show;
+}
+
+.dead_cell{
+    background-color: transparent;
+}
+
+td {
+    /*width: 10px;
+    height: 10px;*/
+}
+
+/****Range Slider from https://www.w3schools.com/howto/howto_js_rangeslider.asp****/
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+    text-align:center;
+    position: relative;
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;
+  width: 400px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  /*background: #04AA6D;*/
+    background: palevioletred;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+/**********************************************************************************/
+
+
+
+/**********************************************************************************/
+/*Tooltips    ref: https://www.w3schools.com/css/css_tooltip.asp*/
+
+
+/* Tooltip text */
+.backgroundtooltiptext, .slidertooltiptext {
+  visibility: hidden;
+  /*width: 120px;*/
+  background-color: #818589;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.slidecontainer:hover .slidertooltiptext {
+  visibility: visible;
+}
+
+#change_background:hover .backgroundtooltiptext{
+    visibility: visible;
+}
+
+/**********************************************************************************/
+/*More info Modal Popup, ref: https://www.w3schools.com/howto/howto_css_modals.asp */
+
+/* The Modal (background) */
+#more_info {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+#more_info_modal {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#more_info_text {
+    color: black;
+}
+
+/**********************************************************************************/
