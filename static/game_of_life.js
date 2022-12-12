@@ -30,11 +30,9 @@ function new_game() {
 
 //Change color of living cell based on color picker input
 function color_picker_event_setup() {
-  //Change color of living cell based on color picker input
   const color_picker = document.getElementById("color_picker");
   color_picker.addEventListener("click", function () {game.pause()}, false);
   color_picker.addEventListener("input", function () {game.change_cell_color(this.value)}, false);
-  //color_picker.addEventListener("change", function () {game.run_game()}, false);
 }
 
 //Slider that allows changing the game cycle speed
@@ -43,7 +41,6 @@ function cycle_speed_event_setup () {
   cycle_speed_slider.addEventListener("mousedown", function () {game.pause()}, false);
   cycle_speed_slider.addEventListener("touchstart", function () {game.pause()}, false);
   cycle_speed_slider.addEventListener("change", function () {game.change_cycle_speed(this.value)}, false);
-  //cycle_speed_slider.addEventListener("change", function () {game.run_game()}, false);
 }
 
 //For displaying first paragraph of "Conway's game of life" wikipedia page when user clicks "more info" button
@@ -81,10 +78,11 @@ class Game {
     this.cycle_timer = null;  //holds the game cycle setInterval() object
     this.cell_size = "10px";
     this.cell_padding = true;
-    this.cycle_speed = 200;
+    this.cycle_speed = 150;
     this.cycle_count = 0;
     //this.living_color = "#2ACB70";
     this.living_color = "#C165EC"
+    this.cycle_speed_max = 1000;
   }
 
   //Set up game and get initial starting seed grid
@@ -105,8 +103,9 @@ class Game {
   }
 
   pause() {
-    console.log("game paused");
+    //console.log("game paused");
     clearInterval(this.cycle_timer);
+    console.log("speed:", game.cycle_speed);
     document.getElementById("run_game").disabled = false;
     document.getElementById("pause_button").disabled = true;
   }
@@ -246,7 +245,7 @@ class Game {
   //If cell has < 2 or > 3 neighbors: it dies
   update_cell_values() {
     const saved_grid = structuredClone(this.grid); //make copy of grid
-    console.log(this.grid);
+    //console.log(this.grid);
     for (let i = 0; i < this.all_coords.length; i++) {
       let x = this.all_coords[i][0];
       let y = this.all_coords[i][1];
@@ -263,7 +262,6 @@ class Game {
         }
       }
     }
-
     this.grid = structuredClone(saved_grid);
   }
 
@@ -310,9 +308,6 @@ class Game {
 
   //Changes cell color based on user input to the color
   change_cell_color(color) {
-    //this.pause();
-
-    //this.living_color = event.target.value;
     this.living_color = color
     let cells = document.querySelectorAll('td.living_cell');
     for(let i = 0; i < cells.length; i++){
@@ -321,10 +316,7 @@ class Game {
   }
 
   change_cycle_speed(speed) {
-    //console.log(speed);
-    speed = Math.abs(speed - 750)
-    //console.log(speed);
+    speed = Math.abs(this.cycle_speed_max - speed)
     this.cycle_speed = speed;
-    //this.run_game();
   }
 }

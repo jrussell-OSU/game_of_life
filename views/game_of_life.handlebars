@@ -30,13 +30,13 @@
       <br><br>
 
     <!--Secondary Buttons-->
-      <label for="color_picker">Cell Color</label>
+      <label for="color_picker">Color</label>
       <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#C165EC">
 
       <!--<button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
               onclick="change_background()">Change Background</button>-->
-      <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Cell Padding</button>
-      <button id="more_info_button" class="btn btn-info">More Info</button>
+      <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Add Spacing</button>
+      <button id="more_info_button" class="btn btn-info">Info</button>
       <span class="backgroundtooltiptext">Change may take a few seconds.</span>
     </div>
 
@@ -52,10 +52,9 @@
   <!--Speed slider bar-->
   <div class="slidecontainer">
       <label for="myRange">Slower</label>
-      <input title="Disabled until game start. Game will pause if speed changed." type="range" min="50" max="800" value="600" class="slider" id="myRange">
+      <input title="Disabled until game start. Game will pause if speed changed." type="range" min="600" max="1000" value="850" class="slider" id="myRange">
       <label for="myRange">Faster</label>
   </div>
-
 
   <br><br>
 
