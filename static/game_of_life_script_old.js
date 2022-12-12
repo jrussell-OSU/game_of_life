@@ -20,7 +20,7 @@ function choose_seed(seed){
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Game speed range slider (ref: https://www.w3schools.com/howto/howto_js_rangeslider.asp)
-let cycle_speed = 150;
+let cycle_speed = 200;
 const slider = document.getElementById("myRange");
 
 // Update the current slider value (each time you drag the slider handle)

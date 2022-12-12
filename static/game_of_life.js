@@ -1,15 +1,12 @@
-
-
+//Author: Jacob Russell
 
 window.addEventListener("load", page_setup, false);
-
-
 
 
 function page_setup() {
 
   //Starts new game of life
-  //globalThis.game = new Game();
+  new_game();
 
   //Disable start button and speed slider until new game is set up
   document.getElementById("run_game").disabled = true;
@@ -17,14 +14,32 @@ function page_setup() {
   document.getElementById("pause_button").disabled = true;
   document.getElementById("color_picker").disabled = true;
 
+  //Setup cell color picking
+  color_picker_event_setup();
+
+  //Setup cycle speed slider
+  cycle_speed_event_setup();
+}
+
+
+function new_game() {
+  globalThis.game = new Game();
+}
+
+function color_picker_event_setup() {
   //Change color of living cell based on color picker input
   const color_picker = document.getElementById("color_picker");
   color_picker.addEventListener("click", function () {game.pause()}, false);
   color_picker.addEventListener("input", function () {game.change_cell_color(this.value)}, false);
-  color_picker.addEventListener("change", function () {game.run_game()}, false);
-  //color_picker.addEventListener("change", game.run_game, false); //once color chosen, resume game
+  //color_picker.addEventListener("change", function () {game.run_game()}, false);
 }
 
+function cycle_speed_event_setup () {
+  const cycle_speed_slider = document.getElementById("myRange");
+  cycle_speed_slider.addEventListener("click", function () {game.pause()}, false);
+  cycle_speed_slider.addEventListener("change", function () {game.change_cycle_speed(this.value)}, false);
+  //cycle_speed_slider.addEventListener("change", function () {game.run_game()}, false);
+}
 
 //Game of Life
 class Game {
@@ -40,11 +55,12 @@ class Game {
     this.cell_size = "10px";
     this.cell_padding = true;
     this.cycle_speed = 200;
+    this.cycle_count = 0;
     this.living_color = "#2ACB70";
   }
 
   //Set up game and get initial starting seed grid
-  setup(seed_type = "random") {
+  setup(seed_type="random") {
     document.getElementById("new_game").disabled = true;
     this.create_blank_grid();
     this.set_all_cell_coords();
@@ -69,8 +85,10 @@ class Game {
 
   //First grid display, set up table cells to display game of life grid
   start() {
-    document.getElementById("color_picker").disabled = false;
+    self.cycle_count++;
 
+    document.getElementById("color_picker").disabled = false;
+    document.getElementById("myRange").disabled = false;
     //first, create initial table grid for the game
     //create table
     let game_div = document.getElementById('game_div');
@@ -108,6 +126,7 @@ class Game {
 
   //Called every cycle to use table cells to display game of life grid
   update_game() {
+    this.cycle_count += 1;
     this.update_cell_values();
     document.getElementById("run_game").disabled = true;
     document.getElementById("new_game").disabled = true;  //disallow start of game until seed chosen
@@ -273,15 +292,12 @@ class Game {
     }
   }
 
-  /*
-  set_cell_color(event) {
-    let cells = document.querySelectorAll('td.living_cell');
-    for(let i = 0; i < cells.length; i++){
-      cells[i].style.backgroundColor = event.target.value;
-    }
+  change_cycle_speed(speed) {
+    //console.log(speed);
+    speed = Math.abs(speed - 750)
+    //console.log(speed);
+    this.cycle_speed = speed;
+    //this.run_game();
   }
-  */
 }
 
-
-var game = new Game();
