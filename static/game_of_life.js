@@ -4,6 +4,21 @@
 document.getElementById("start_game").disabled = true;
 document.getElementById("myRange").disabled = true;
 document.getElementById("pause_button").disabled = true;
+document.getElementById("color_picker").disabled = true;
+
+//Change color of living cell based on color picker input
+//document.getElementById("color_picker").disabled = true;
+let living_color = "#2ACB70";  //Default cell color
+
+const color_picker = document.getElementById("color_picker");
+color_picker.oninput = function() {
+  pause();   //pause game while changing color
+  living_color = this.value;
+  let cells = document.querySelectorAll('td.living_cell');
+  for(let i = 0; i < cells.length; i++){
+  cells[i].style.backgroundColor = living_color;
+  }
+}
 
 
 class Game {
@@ -30,6 +45,7 @@ class Game {
     this.set_seed(seed_type);
     this.start();
     document.getElementById("start_game").disabled = false;
+    document.getElementById("color_picker").disabled = false;
 
   }
 
@@ -42,7 +58,7 @@ class Game {
     console.log("game paused");
     clearInterval(this.game_interval);
     document.getElementById("start_game").disabled = false;
-    document.getElementById("pause_button").disabled = true;
+    document.getElementById("pause_button").disabled = false;
   }
 
   //First grid display, set up table cells to display game of life grid
