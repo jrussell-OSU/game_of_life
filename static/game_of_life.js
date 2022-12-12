@@ -2,7 +2,7 @@
 
 window.addEventListener("load", page_setup, false);
 
-
+//Starts a new Game() and sets up webpage as needed
 function page_setup() {
 
   //Starts new game of life
@@ -28,6 +28,7 @@ function new_game() {
   globalThis.game = new Game();
 }
 
+//Change color of living cell based on color picker input
 function color_picker_event_setup() {
   //Change color of living cell based on color picker input
   const color_picker = document.getElementById("color_picker");
@@ -36,13 +37,16 @@ function color_picker_event_setup() {
   //color_picker.addEventListener("change", function () {game.run_game()}, false);
 }
 
+//Slider that allows changing the game cycle speed
 function cycle_speed_event_setup () {
   const cycle_speed_slider = document.getElementById("myRange");
-  cycle_speed_slider.addEventListener("click", function () {game.pause()}, false);
+  cycle_speed_slider.addEventListener("mousedown", function () {game.pause()}, false);
+  cycle_speed_slider.addEventListener("touchstart", function () {game.pause()}, false);
   cycle_speed_slider.addEventListener("change", function () {game.change_cycle_speed(this.value)}, false);
   //cycle_speed_slider.addEventListener("change", function () {game.run_game()}, false);
 }
 
+//For displaying first paragraph of "Conway's game of life" wikipedia page when user clicks "more info" button
 function more_info_modal_text() {
     //ref: https://www.w3schools.com/howto/howto_css_modals.asp
     let modal = document.getElementById("more_info");
@@ -324,4 +328,3 @@ class Game {
     //this.run_game();
   }
 }
-

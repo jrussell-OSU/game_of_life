@@ -1,25 +1,11 @@
-//-------------------SETUP--------------------------
+//Author: Jacob Russell
 
+//--------SETUP-----------------
 
-'use strict';
-
-//const express = require('express');
-
-//app.use(express.json());
 
 //app.enable('trust proxy');
-
-//const {Datastore} = require('@google-cloud/datastore');
-//const { auth } = require('express-openid-connect');
-//const config = require('./secrets/config.json')
-//const bodyParser = require('body-parser');
-//const handlebars = require('express-handlebars');
-//import express from 'express';
-
 const axios = require('axios');
 const url = require('url');
-const http = require('http');
-const path = require('path');
 const handlebars = require('express-handlebars');
 const express = require('express');
 const app = express();
@@ -27,7 +13,6 @@ app.use(express.static('static'));
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -42,27 +27,27 @@ async function get_wiki_text() {
         "prop": "extracts",
         "titles": "Conway's_Game_of_Life",
         "formatversion": "2",
-        "exsentences": "5"
+        "exsentences": "5",
+        "explaintext": true,
+        "exintro": true
       }
+
     const params = new url.URLSearchParams(query_params);
     const response = await axios.get(`https://en.wikipedia.org/w/api.php?${params}`);
-    const result = response.data.query.pages[0].extract;
-    //console.log(result);
+    let result = response.data.query.pages[0].extract;
+    result = JSON.stringify(result);
+    //result = result.replace(/<[^>]*>/g);
     const context = {
       wiki_text: result
     }
-    //let text_results = JSON.stringify(result);
-    //console.log(JSON.stringify(result));
-
     return context;
   } catch (error) {
     console.error(error);
   }
 }
 
-
 app.get('/game_of_life', async function (req, res) {
-  const context = await get_wiki_text();
+  const context = await get_wiki_text();  //include the "more info" text we got from wikipedia Conway's Game of Life article
   res.render('game_of_life', {context: context});
 });
 
