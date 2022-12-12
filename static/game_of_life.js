@@ -1,14 +1,16 @@
 
 const DEBUG = true
-const ROWS = 10
-const COLUMNS = 10
-const PROBABILITY = 3
-const CYCLE_SPEED = 200;  //higher == slower
+const ROWS = 50
+const COLUMNS = 50
+const PROBABILITY = 6  //default 6
+const CYCLE_SPEED = 300;  //higher == slower. default 160
+const CELL_SIZE = "10px"
+const LIVING_COLOR = "#2ACB70";
 
 
 class Game {
-  constructor(seed_type="random") {
-    this.seed_type = seed_type  //type of starting "seed" grid
+  constructor() {
+    //type of starting "seed" grid
     this.rows = ROWS;
     this.columns = COLUMNS;
     this.probability = PROBABILITY;
@@ -19,31 +21,29 @@ class Game {
   }
 
   //Set up game and get initial starting seed grid
-  setup() {
+  setup(seed_type = "random") {
     this.create_blank_grid();
     this.set_all_cell_coords();
-    this.set_seed(this.seed_type);
+    this.set_seed(seed_type);
+    this.start();
   }
 
   //Causes the game of life to cycle until stopped at rate of CYCLE_SPEED
   play() {
-    this.start();
-    this.game_interval = setInterval(() => this.update_and_display(), CYCLE_SPEED);
-    console.log(this.game_interval)
-  }
-
-  update_and_display() {
-    this.update_cell_values();
-    this.display_grid();
+    //this.start();
+    this.game_interval = setInterval(() => this.update_game(), CYCLE_SPEED);
+    //console.log(this.game_interval);
   }
 
   pause() {
+    console.log("game paused");
     clearInterval(this.game_interval);
   }
 
   start() {
      // document.getElementById("start_game").disabled = true;
-    document.getElementById("dropdownMenuButton").disabled = true;
+    console.log("starting game");
+     document.getElementById("dropdownMenuButton").disabled = true;
     document.getElementById("color_picker").disabled = false;
     document.getElementById("myRange").disabled = false;  //disallow start of game until seed chosen
 
@@ -65,8 +65,8 @@ class Game {
       for (let j = 0; j < curr_row.length; j++) {
         let curr_cell = curr_row[j];
         let cell = document.createElement('TD');
-        cell.style.height = cell_size;
-        cell.style.width = cell_size;
+        cell.style.height = CELL_SIZE;
+        cell.style.width = CELL_SIZE;
         tbl_row.appendChild(cell);
 
         if (curr_cell === 0) {
@@ -76,11 +76,49 @@ class Game {
         } else {
           //create a living cell
           cell.className = "living_cell"; //add to CSS if needed
-          cell.style.backgroundColor = living_color;
+          cell.style.backgroundColor = LIVING_COLOR;
         }
       }
     }
   }
+
+  update_game() {
+    console.log("continuing game..");
+    this.update_cell_values();
+    document.getElementById("start_game").disabled = true;
+    //document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
+    document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
+
+      //Iterate through the given current grid state from python, for each cell
+      //turn the corresponding html table cell "on" or "off" (color or transparent)
+      let game_div = document.getElementById('game_div');
+      let tbl = game_div.firstChild;
+      let tbl_body = tbl.firstChild;
+      let rows = this.grid;
+      let tbl_rows = tbl_body.children;
+      for (let i = 0; i < rows.length; i++) {
+        let tbl_row = tbl_rows[i];
+        let curr_row = rows[i];
+        let row_children = tbl_row.children;
+        for (let j = 0; j < curr_row.length; j++) {
+          let curr_cell = curr_row[j];
+          let cell = row_children[j];
+          cell.style.height = CELL_SIZE;
+          cell.style.width = CELL_SIZE;
+
+          if (curr_cell === 0) {
+            //dead cell
+            cell.className = "dead_cell";  //add to CSS for background color
+            cell.style.backgroundColor = "transparent";
+          } else {
+            //living cell
+            cell.className = "living_cell"; //add to CSS if needed
+            cell.style.backgroundColor = LIVING_COLOR;
+          }
+        }
+      }
+  }
+
   //Creates 2d array "grid" of dimentions [this.rows][this.columns]
   create_blank_grid() {
     this.blank_grid = Array(this.rows);
@@ -101,8 +139,7 @@ class Game {
     this.all_coords = coords_array;
   }
 
-  //Takes coordinate pair array [x, y] (representing a cell)and a grid,
-  //returns total number of "living" neighbors to that cell
+  //takes cell coords [x, y], returns total num of living neighbors for that cell
   total_neighbors(coords, grid) {
     let x = coords[0];
     let y = coords[1];
@@ -122,7 +159,7 @@ class Game {
         else
           yn = yn % this.rows;
 
-        neighbors += grid[xn][yn];
+        neighbors += grid[yn][xn];
 
         //neighbors += grid[(y+j)%this.rows][(x+i)%this.columns];
       }
@@ -133,8 +170,12 @@ class Game {
     return neighbors;
   }
 
+  //Called every cycle to update cell values
+  //If cell is dead and has exactly 3 neighbors: it lives
+  //If cell has < 2 or > 3 neighbors: it dies
   update_cell_values() {
     const saved_grid = structuredClone(this.grid); //make copy of grid
+    console.log(this.grid);
     for (let i = 0; i < this.all_coords.length; i++) {
       let x = this.all_coords[i][0];
       let y = this.all_coords[i][1];
@@ -182,7 +223,5 @@ class Game {
 }
 
 
-//const game = new Game();
-//game.setup();
-//game.play();
+let game = new Game();
 
