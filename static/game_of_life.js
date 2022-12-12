@@ -19,8 +19,10 @@ function page_setup() {
 
   //Setup cycle speed slider
   cycle_speed_event_setup();
-}
 
+  //Wikipedia text scraper
+  more_info_modal_text();
+}
 
 function new_game() {
   globalThis.game = new Game();
@@ -41,6 +43,27 @@ function cycle_speed_event_setup () {
   //cycle_speed_slider.addEventListener("change", function () {game.run_game()}, false);
 }
 
+function more_info_modal_text() {
+    //ref: https://www.w3schools.com/howto/howto_css_modals.asp
+    let modal = document.getElementById("more_info");
+    let btn = document.getElementById("more_info_button");
+    let span = document.getElementsByClassName("close")[0];
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+}
+
 //Game of Life
 class Game {
   constructor() {
@@ -56,7 +79,8 @@ class Game {
     this.cell_padding = true;
     this.cycle_speed = 200;
     this.cycle_count = 0;
-    this.living_color = "#2ACB70";
+    //this.living_color = "#2ACB70";
+    this.living_color = "#C165EC"
   }
 
   //Set up game and get initial starting seed grid

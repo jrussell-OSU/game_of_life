@@ -107,7 +107,8 @@ window.onclick = function(event) {
 //Change color of living cell based on color picker input
 
 document.getElementById("color_picker").disabled = true;
-let living_color = "#2ACB70";  //Default cell color
+//let living_color = "#2ACB70";  //Default cell color
+let living_color = "#C165EC";
 const color_picker = document.getElementById("color_picker");
 
 color_picker.oninput = function() {

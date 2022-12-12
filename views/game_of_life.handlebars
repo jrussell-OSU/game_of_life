@@ -31,7 +31,8 @@
 
     <!--Secondary Buttons-->
       <label for="color_picker">Cell Color</label>
-      <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#2ACB70">
+      <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#C165EC">
+
       <!--<button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
               onclick="change_background()">Change Background</button>-->
       <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Cell Padding</button>
@@ -44,7 +45,7 @@
    <div id="more_info" class="modal">
      <div id="more_info_modal">
       <span class="close">&times;</span>
-      <p id="more_info_text">Some text in the Modal..</p>
+      <p id="more_info_text">{{context.wiki_text}}</p>
      </div>
    </div>
 
