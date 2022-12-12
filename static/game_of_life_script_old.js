@@ -2,10 +2,10 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Starting seeds
 
-//Disable start and continue buttons until the seed grid is generated
-document.getElementById("start_game").disabled = true;  //disallow start of game until seed chosen
-document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
-document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
+//Disable start, continue, and speed buttons until new game is set up
+document.getElementById("start_game").disabled = true;
+document.getElementById("continue_button").disabled = true;
+document.getElementById("myRange").disabled = true;
 
 //Takes the flask route name (e.g. "/random"). returns a new starting grid from python
 function choose_seed(seed){

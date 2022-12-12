@@ -1,51 +1,57 @@
 
-const DEBUG = true
-const ROWS = 50
-const COLUMNS = 50
-const PROBABILITY = 6  //default 6
-const CYCLE_SPEED = 300;  //higher == slower. default 160
-const CELL_SIZE = "10px"
-const LIVING_COLOR = "#2ACB70";
+
+//Disable start button and speed slider until new game is set up
+document.getElementById("start_game").disabled = true;
+document.getElementById("myRange").disabled = true;
+document.getElementById("pause_button").disabled = true;
 
 
 class Game {
   constructor() {
     //type of starting "seed" grid
-    this.rows = ROWS;
-    this.columns = COLUMNS;
-    this.probability = PROBABILITY;
+    this.rows = 50;
+    this.columns = 50;
+    this.probability = 6;
     this.grid = [];
     this.blank_grid = [];
     this.all_coords = [];
     this.game_interval = null;  //holds the game cycle setInterval() object
+    this.cell_size = "10px";
+    this.cell_padding = true;
+    this.cycle_speed = 200;
+    this.living_color = "#2ACB70";
   }
 
   //Set up game and get initial starting seed grid
   setup(seed_type = "random") {
+    document.getElementById("create_game").disabled = true;
     this.create_blank_grid();
     this.set_all_cell_coords();
     this.set_seed(seed_type);
     this.start();
+    document.getElementById("start_game").disabled = false;
+
   }
 
-  //Causes the game of life to cycle until stopped at rate of CYCLE_SPEED
+  //Causes the game of life to cycle until stopped at rate of cycle_speed
   play() {
-    //this.start();
-    this.game_interval = setInterval(() => this.update_game(), CYCLE_SPEED);
-    //console.log(this.game_interval);
+    this.game_interval = setInterval(() => this.update_game(), this.cycle_speed);
   }
 
   pause() {
     console.log("game paused");
     clearInterval(this.game_interval);
+    document.getElementById("start_game").disabled = false;
+    document.getElementById("pause_button").disabled = true;
   }
 
+  //First grid display, set up table cells to display game of life grid
   start() {
      // document.getElementById("start_game").disabled = true;
-    console.log("starting game");
-     document.getElementById("dropdownMenuButton").disabled = true;
+     //document.getElementById("dropdownMenuButton").disabled = true;
     document.getElementById("color_picker").disabled = false;
-    document.getElementById("myRange").disabled = false;  //disallow start of game until seed chosen
+
+    //document.getElementById("color_picker").disabled = false;
 
     //first, create initial table grid for the game
     //create table
@@ -65,8 +71,8 @@ class Game {
       for (let j = 0; j < curr_row.length; j++) {
         let curr_cell = curr_row[j];
         let cell = document.createElement('TD');
-        cell.style.height = CELL_SIZE;
-        cell.style.width = CELL_SIZE;
+        cell.style.height = this.cell_size;
+        cell.style.width = this.cell_size;
         tbl_row.appendChild(cell);
 
         if (curr_cell === 0) {
@@ -76,18 +82,19 @@ class Game {
         } else {
           //create a living cell
           cell.className = "living_cell"; //add to CSS if needed
-          cell.style.backgroundColor = LIVING_COLOR;
+          cell.style.backgroundColor = this.living_color;
         }
       }
     }
   }
 
+  //Called every cycle to use table cells to display game of life grid
   update_game() {
-    console.log("continuing game..");
     this.update_cell_values();
     document.getElementById("start_game").disabled = true;
     //document.getElementById("myRange").disabled = true;  //disallow start of game until seed chosen
-    document.getElementById("continue_button").disabled = true;  //disallow start of game until seed chosen
+    document.getElementById("create_game").disabled = true;  //disallow start of game until seed chosen
+    document.getElementById("pause_button").disabled = false;
 
       //Iterate through the given current grid state from python, for each cell
       //turn the corresponding html table cell "on" or "off" (color or transparent)
@@ -103,8 +110,8 @@ class Game {
         for (let j = 0; j < curr_row.length; j++) {
           let curr_cell = curr_row[j];
           let cell = row_children[j];
-          cell.style.height = CELL_SIZE;
-          cell.style.width = CELL_SIZE;
+          cell.style.height = this.cell_size;
+          cell.style.width = this.cell_size;
 
           if (curr_cell === 0) {
             //dead cell
@@ -113,7 +120,7 @@ class Game {
           } else {
             //living cell
             cell.className = "living_cell"; //add to CSS if needed
-            cell.style.backgroundColor = LIVING_COLOR;
+            cell.style.backgroundColor = this.living_color;
           }
         }
       }
@@ -215,13 +222,28 @@ class Game {
     }
   }
 
-  display_grid () {
-    for (let i = 0; i < this.rows; i++) {
-      console.log(this.grid);
+  //Grid on/off button, separates or collapses border between cells
+  //To keep same table size, cells with the borders are also shrunk slightly
+  collapse_border() {
+    let game_div = document.getElementById('game_div');
+    let tbl = game_div.firstChild;
+    if (this.cell_padding === true) {
+      this.cell_size = "8px";
+      tbl.style.borderCollapse = "separate";
+      this.cell_padding = false;
     }
+    else {
+      tbl.style.borderCollapse = "collapse";
+      this.cell_size = "10px";
+      this.cell_padding = true;
+      }
+    let cells = document.querySelectorAll('td');
+      for(let i = 0; i < cells.length; i++){
+        cells[i].style.height = this.cell_size;
+        cells[i].style.width = this.cell_size;
+      }
   }
 }
-
 
 let game = new Game();
 

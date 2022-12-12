@@ -13,17 +13,18 @@
   <div class="buttons_div">
 
     <!--Primary Buttons-->
+      <button id="create_game" class="btn btn-primary" onclick="game.setup();">Create Game</button>
       <button id="start_game" class="btn btn-primary" onclick="game.play();">Start Game</button>
-      <button class="btn btn-primary dropdown-toggle" title="Choose seed before game will start" type="button" id="dropdownMenuButton"
+      <!--<button class="btn btn-primary dropdown-toggle" title="Choose seed before game will start" type="button" id="dropdownMenuButton"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
     <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <button type="button" class="dropdown-item" onclick="game.setup('random');">random</button>
+      <button type="button" class="dropdown-item" onclick="game.setup('random');">random</button>-->
       <!--<button type="button" class="dropdown-item" onclick="choose_seed('/glider')">glider</button>-->
       <!--<button type="button" class="dropdown-item" onclick="choose_seed('/penta_decathlon')">penta-decathlon</button>-->
     </span>
 
       <button id="pause_button" class="btn btn-primary" onClick="game.pause();">Pause</button>
-      <button id="continue_button" class="btn btn-primary" onClick="game.play();">Continue</button>
+      <!--<button id="continue_button" class="btn btn-primary" onClick="game.play();">Continue</button>-->
       <button class="btn btn-primary" onClick="window.location.reload();">Reset</button>
 
       <br><br>
@@ -31,9 +32,9 @@
     <!--Secondary Buttons-->
       <label for="color_picker">Cell Color</label>
       <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#2ACB70">
-      <button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
-              onclick="change_background()">Change Background</button>
-      <button id="grid_collapse" class="btn btn-secondary" onclick="collapse_border()">Grid</button>
+      <!--<button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
+              onclick="change_background()">Change Background</button>-->
+      <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Cell Padding</button>
       <button id="more_info_button" class="btn btn-info">More Info</button>
       <span class="backgroundtooltiptext">Change may take a few seconds.</span>
     </div>
