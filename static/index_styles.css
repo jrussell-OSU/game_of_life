@@ -1,7 +1,12 @@
-h1 {
-    text-align: center;
+body {
+    background-color: #1F1E1C;
+    color: #f3e7d3;
 }
 
-div {
-    padding-left: 10px;
+#nav-link nav-item {
+    font-weight: bold !important;
+}
+
+#nav nav-pills {
+    padding-top: 10px;
 }

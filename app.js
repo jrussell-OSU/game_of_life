@@ -6,6 +6,7 @@
 //app.enable('trust proxy');
 const axios = require('axios');
 const url = require('url');
+const path = require('path');
 const handlebars = require('express-handlebars');
 const express = require('express');
 const app = express();
@@ -13,6 +14,8 @@ app.use(express.static('static'));
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+//app.use('/static', express.static(path.join(__dirname, 'public')));
+
 
 app.get('/', (req, res) => {
   res.render('index');
