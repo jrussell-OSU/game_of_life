@@ -7,14 +7,9 @@ function page_setup() {
 
   //Starts new game of life
   new_game();
-  //game.setup();
-
 
   //Disable start button and speed slider until new game is set up
-  document.getElementById("run_game").disabled = true;
-  document.getElementById("myRange").disabled = true;
-  document.getElementById("pause").disabled = true;
-  document.getElementById("color_picker").disabled = true;
+  disable_elements(["run_game", "myRange", "pause", "color_picker"]);
 
   //Setup cell color picking
   color_picker_event_setup();
@@ -24,8 +19,6 @@ function page_setup() {
 
   //Wikipedia text scraper
   more_info_modal_text();
-
-  //game.run_game();
 }
 
 function new_game() {
@@ -35,7 +28,6 @@ function new_game() {
 //Change color of living cell based on color picker input
 function color_picker_event_setup() {
   const color_picker = document.getElementById("color_picker");
-  //color_picker.addEventListener("click", function () {game.pause()}, false);
   color_picker.addEventListener("input", function () {game.change_cell_color(this.value)}, false);
 }
 
@@ -76,13 +68,27 @@ function more_info_modal_text() {
     }
 }
 
+//Given list of html elements, disables them all
+function disable_elements(el_arr) {
+  for (let i = 0; i < el_arr.length; i++){
+    document.getElementById(el_arr[i]).disabled = true;
+  }
+}
+
+//Given list of html elements, enables them all
+function enable_elements(el_arr) {
+  for (let i = 0; i < el_arr.length; i++){
+    document.getElementById(el_arr[i]).disabled = false;
+  }
+}
+
 //Game of Life
 class Game {
   constructor() {
     //type of starting "seed" grid
     this.rows = 100;
     this.columns = 100;
-    this.probability = 6;
+    this.probability = 6;  //chance of initial cell being alive, higher num == lower chance
     this.grid = [];
     this.blank_grid = [];
     this.all_coords = [];
@@ -91,7 +97,7 @@ class Game {
     this.cell_size_min = "8px";
     this.cell_size_max = "10px";
     this.cell_padding = true;
-    this.cycle_speed = 150;
+    this.cycle_speed = 200;
     this.cycle_count = 0;
     //this.living_color = "#2ACB70";
     this.living_color = "#C165EC"
@@ -109,13 +115,7 @@ class Game {
 
   }
 
-  disable_element(el) {
-    document.getElementById(el).disabled = true;
-  }
 
-  enable_element(el) {
-    document.getElementById(el).disabled = false;
-  }
 
   delete_game() {
     let game_div = document.getElementById('game_of_life_div');
@@ -353,4 +353,7 @@ class Game {
     speed = Math.abs(this.cycle_speed_max - speed)
     this.cycle_speed = speed;
   }
+
+
+
 }

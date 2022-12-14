@@ -43,10 +43,10 @@ body {
 }
 
 .nav-link:hover {
-    color: #21421e !important;
+    color: green !important;
 }
 
 .nav-link {
     /*color: #177245 !important;*/
-    color: #414a4c;
+    color: #414a4c !important;
 }
