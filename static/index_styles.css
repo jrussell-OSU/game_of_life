@@ -18,11 +18,9 @@ body {
 }
 
 .nav-item {
-    padding: 5px;
-    font-weight: bold;
+    font-weight: 500;
     color: white;
-    font-size: 100%;
-    font-size: 4vmin;
+    font-size: 18px;
 }
 
 .nav-link:hover {
