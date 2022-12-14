@@ -5,17 +5,36 @@ html {
 body {
     /*background-color: #1F1E1C;*/
     /*color: #f3e7d3;*/
-    color: #f3e7d3
+    color: #f3e7d3;
+    height: 100%;
 }
 
-.container {
-    text-align: right
+#skills_list {
+    text-align: left;
+}
+
+.skill {
+    margin: 0;
+    padding-left: 0;
 }
 
 .navbar {
     background-color: #efebd8 !important;
-
 }
+
+#intro {
+    text-align: right;
+}
+
+.dropdown-menu {
+    background-color: #efebd8;
+}
+
+.dropdown-item {
+    font-weight: 500;
+    color: #414a4c
+}
+
 
 .nav-item {
     font-weight: 500;

@@ -14,6 +14,7 @@ label, h1, p, h6 {
 
 h1{
     text-align: center;
+    opacity: .7;
 }
 
 .buttons_div{
@@ -25,6 +26,7 @@ h1{
     position: relative;
     /*display: inline-block;
      */
+     opacity: .65;
 }
 
 
@@ -78,20 +80,20 @@ td {
 /* The slider itself */
 .slider {
   -webkit-appearance: none;
-  width: 400px;
+  width: 300px;
   height: 15px;
   border-radius: 5px;
   background: #d3d3d3;
   outline: none;
-  opacity: 0.7;
+  opacity: 0.5;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
 
+
 /* Mouse-over effects */
 .slider:hover {
   opacity: 1; /* Fully shown on mouse-over */
-
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
