@@ -1,12 +1,29 @@
+html {
+    height: 100%;
+}
+
 body {
-    background-color: #1F1E1C;
-    color: #f3e7d3;
+    /*background-color: #1F1E1C;*/
+    /*color: #f3e7d3;*/
+    color: #f3e7d3
 }
 
-#nav-link nav-item {
-    font-weight: bold !important;
+.navbar {
+    background-color: #efebd8 !important;
+    
 }
 
-#nav nav-pills {
-    padding-top: 10px;
+.nav-item {
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+}
+
+.nav-link:hover {
+    color: #306030 !important;
+}
+
+.nav-link {
+    color: seagreen !important;
 }
