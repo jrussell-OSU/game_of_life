@@ -8,22 +8,27 @@ body {
     color: #f3e7d3
 }
 
+.container {
+    text-align: right
+}
+
 .navbar {
     background-color: #efebd8 !important;
-    
+
 }
 
 .nav-item {
     padding: 5px;
     font-weight: bold;
     color: white;
-    font-size: 20px;
+    font-size: 100%;
+    font-size: 4vmin;
 }
 
 .nav-link:hover {
-    color: #306030 !important;
+    color: #21421e !important;
 }
 
 .nav-link {
-    color: seagreen !important;
+    color: #177245 !important;
 }
