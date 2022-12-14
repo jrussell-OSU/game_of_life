@@ -14,39 +14,25 @@
 
     <div id="controls_div">
     <h1>Conway's Game of Life</h1>
-      <div class="buttons_div">
 
         <!--Primary Buttons-->
+        <div class="buttons_div">
           <button id="new_game" class="btn btn-primary" onclick="game.setup();">New Game</button>
           <button id="run_game" class="btn btn-primary" onclick="game.run_game();">Run</button>
-          <!--<button class="btn btn-primary dropdown-toggle" title="Choose seed before game will start" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
-        <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <button type="button" class="dropdown-item" onclick="game.setup('random');">random</button>-->
-          <!--<button type="button" class="dropdown-item" onclick="choose_seed('/glider')">glider</button>-->
-          <!--<button type="button" class="dropdown-item" onclick="choose_seed('/penta_decathlon')">penta-decathlon</button>-->
-        </span>
-
           <button id="pause" class="btn btn-primary" onClick="game.pause();">Pause</button>
-          <!--<button id="continue_button" class="btn btn-primary" onClick="game.run_game();">Continue</button>-->
-          <!--<button class="btn btn-primary" onClick="window.location.reload();">Reset</button>-->
-
+          <a href="/" class="btn btn-primary">Home</a>
           <br>
-
+        </div>
+        
         <!--Secondary Buttons-->
-            <label for="color_picker"></label>
-
+        <div class="container" id="secondary_buttons">
           <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#C165EC">
-
-          <!--<button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
-                  onclick="change_background()">Change Background</button>-->
           <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Toggle Grid</button>
           <button id="more_info_button" class="btn btn-info">Info</button>
           <span class="backgroundtooltiptext">Change may take a few seconds.</span>
         </div>
 
-      <!--Game of Life Wiki More Info modal button, uses teammate's microservice-->
-      <!--ref: https://www.w3schools.com/howto/howto_css_modals.asp-->
+      <!--Game of Life Wiki More Info modal button-->
       <div id="more_info" class="modal">
         <div id="more_info_modal">
           <span class="close">&times;</span>
@@ -60,12 +46,7 @@
           <label for="myRange">Cycle Speed</label>
       </div>
     </div>
-    <br><br>
-
-    <!--<div id="game_div"></div>-->
-
   </div>
-
   </body>
 
   <script src="https://livejs.com/live.js"></script>
