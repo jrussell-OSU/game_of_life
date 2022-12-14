@@ -8,58 +8,61 @@
   </head>
 
   <body class="game_of_life">
-  <br>
-  <h1>Conway's Game of Life</h1>
-  <div id="game_of_life_div">
-  <div class="buttons_div">
+  <div id="main_gol_div">
 
-    <!--Primary Buttons-->
-      <button id="new_game" class="btn btn-primary" onclick="game.setup();">New Game</button>
-      <button id="run_game" class="btn btn-primary" onclick="game.run_game();">Run</button>
-      <!--<button class="btn btn-primary dropdown-toggle" title="Choose seed before game will start" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
-    <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <button type="button" class="dropdown-item" onclick="game.setup('random');">random</button>-->
-      <!--<button type="button" class="dropdown-item" onclick="choose_seed('/glider')">glider</button>-->
-      <!--<button type="button" class="dropdown-item" onclick="choose_seed('/penta_decathlon')">penta-decathlon</button>-->
-    </span>
+    <div id="game_of_life_div" class="container-fluid"></div>
 
-      <button id="pause_button" class="btn btn-primary" onClick="game.pause();">Pause</button>
-      <!--<button id="continue_button" class="btn btn-primary" onClick="game.run_game();">Continue</button>-->
-      <button class="btn btn-primary" onClick="window.location.reload();">Reset</button>
+    <div id="controls_div">
+    <h1>Conway's Game of Life</h1>
+      <div class="buttons_div">
 
-      <br><br>
+        <!--Primary Buttons-->
+          <button id="new_game" class="btn btn-primary" onclick="game.setup();">New Game</button>
+          <button id="run_game" class="btn btn-primary" onclick="game.run_game();">Run</button>
+          <!--<button class="btn btn-primary dropdown-toggle" title="Choose seed before game will start" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Seed</button>
+        <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button type="button" class="dropdown-item" onclick="game.setup('random');">random</button>-->
+          <!--<button type="button" class="dropdown-item" onclick="choose_seed('/glider')">glider</button>-->
+          <!--<button type="button" class="dropdown-item" onclick="choose_seed('/penta_decathlon')">penta-decathlon</button>-->
+        </span>
 
-    <!--Secondary Buttons-->
-      <label for="color_picker">Color</label>
-      <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#C165EC">
+          <button id="pause" class="btn btn-primary" onClick="game.pause();">Pause</button>
+          <!--<button id="continue_button" class="btn btn-primary" onClick="game.run_game();">Continue</button>-->
+          <!--<button class="btn btn-primary" onClick="window.location.reload();">Reset</button>-->
 
-      <!--<button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
-              onclick="change_background()">Change Background</button>-->
-      <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Spacing</button>
-      <button id="more_info_button" class="btn btn-info">Info</button>
-      <span class="backgroundtooltiptext">Change may take a few seconds.</span>
+          <br>
+
+        <!--Secondary Buttons-->
+            <label for="color_picker"></label>
+
+          <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#C165EC">
+
+          <!--<button id="change_background" class="btn btn-secondary" title="Please be patient, can take a few seconds"
+                  onclick="change_background()">Change Background</button>-->
+          <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Toggle Grid</button>
+          <button id="more_info_button" class="btn btn-info">Info</button>
+          <span class="backgroundtooltiptext">Change may take a few seconds.</span>
+        </div>
+
+      <!--Game of Life Wiki More Info modal button, uses teammate's microservice-->
+      <!--ref: https://www.w3schools.com/howto/howto_css_modals.asp-->
+      <div id="more_info" class="modal">
+        <div id="more_info_modal">
+          <span class="close">&times;</span>
+          <p id="more_info_text">From Wikipedia: {{context.wiki_text}}</p>
+        </div>
+      </div>
+
+      <!--Speed slider bar-->
+      <div class="slidecontainer">
+          <input type="range" min="600" max="1000" value="850" class="slider" id="myRange">
+          <label for="myRange">Cycle Speed</label>
+      </div>
     </div>
+    <br><br>
 
-  <!--Game of Life Wiki More Info modal button, uses teammate's microservice-->
-  <!--ref: https://www.w3schools.com/howto/howto_css_modals.asp-->
-   <div id="more_info" class="modal">
-     <div id="more_info_modal">
-      <span class="close">&times;</span>
-      <p id="more_info_text">{{context.wiki_text}}</p>
-     </div>
-   </div>
-
-  <!--Speed slider bar-->
-  <div class="slidecontainer">
-      <input type="range" min="600" max="1000" value="850" class="slider" id="myRange">
-      <br>
-      <label for="myRange">Cycle Speed</label>
-  </div>
-
-  <br><br>
-
-  <div id="game_div"></div>
+    <!--<div id="game_div"></div>-->
 
   </div>
 

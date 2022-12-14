@@ -7,11 +7,13 @@ function page_setup() {
 
   //Starts new game of life
   new_game();
+  //game.setup();
+
 
   //Disable start button and speed slider until new game is set up
   document.getElementById("run_game").disabled = true;
   document.getElementById("myRange").disabled = true;
-  document.getElementById("pause_button").disabled = true;
+  document.getElementById("pause").disabled = true;
   document.getElementById("color_picker").disabled = true;
 
   //Setup cell color picking
@@ -22,6 +24,8 @@ function page_setup() {
 
   //Wikipedia text scraper
   more_info_modal_text();
+
+  //game.run_game();
 }
 
 function new_game() {
@@ -31,32 +35,39 @@ function new_game() {
 //Change color of living cell based on color picker input
 function color_picker_event_setup() {
   const color_picker = document.getElementById("color_picker");
-  color_picker.addEventListener("click", function () {game.pause()}, false);
+  //color_picker.addEventListener("click", function () {game.pause()}, false);
   color_picker.addEventListener("input", function () {game.change_cell_color(this.value)}, false);
 }
 
 //Slider that allows changing the game cycle speed
 function cycle_speed_event_setup () {
   const cycle_speed_slider = document.getElementById("myRange");
-  cycle_speed_slider.addEventListener("mousedown", function () {game.pause()}, false);
-  cycle_speed_slider.addEventListener("touchstart", function () {game.pause()}, false);
+  //cycle_speed_slider.addEventListener("mousedown", function () {game.pause()}, false);
+  //cycle_speed_slider.addEventListener("touchstart", function () {game.pause()}, false);
   cycle_speed_slider.addEventListener("change", function () {game.change_cycle_speed(this.value)}, false);
+  cycle_speed_slider.addEventListener("change", function () {game.pause()}, false);
+  cycle_speed_slider.addEventListener("change", function () {game.run_game()}, false);
+
 }
 
 //For displaying first paragraph of "Conway's game of life" wikipedia page when user clicks "more info" button
 function more_info_modal_text() {
+
     //ref: https://www.w3schools.com/howto/howto_css_modals.asp
     let modal = document.getElementById("more_info");
     let btn = document.getElementById("more_info_button");
     let span = document.getElementsByClassName("close")[0];
+
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
     modal.style.display = "block";
     }
+
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
     modal.style.display = "none";
     }
+
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
       if (event.target === modal) {
@@ -69,14 +80,16 @@ function more_info_modal_text() {
 class Game {
   constructor() {
     //type of starting "seed" grid
-    this.rows = 50;
-    this.columns = 50;
+    this.rows = 100;
+    this.columns = 100;
     this.probability = 6;
     this.grid = [];
     this.blank_grid = [];
     this.all_coords = [];
     this.cycle_timer = null;  //holds the game cycle setInterval() object
     this.cell_size = "10px";
+    this.cell_size_min = "8px";
+    this.cell_size_max = "10px";
     this.cell_padding = true;
     this.cycle_speed = 150;
     this.cycle_count = 0;
@@ -87,38 +100,46 @@ class Game {
 
   //Set up game and get initial starting seed grid
   setup(seed_type="random") {
-    document.getElementById("new_game").disabled = true;
     this.create_blank_grid();
     this.set_all_cell_coords();
     this.set_seed(seed_type);
-    this.start();
+    this.create_game();
     document.getElementById("run_game").disabled = false;
     document.getElementById("color_picker").disabled = false;
 
   }
 
-  //Causes the game of life to cycle until stopped at rate of cycle_speed
-  run_game() {
-    this.cycle_timer = setInterval(() => this.update_game(), this.cycle_speed);
+  disable_element(el) {
+    document.getElementById(el).disabled = true;
   }
 
-  pause() {
-    //console.log("game paused");
-    clearInterval(this.cycle_timer);
-    console.log("speed:", game.cycle_speed);
-    document.getElementById("run_game").disabled = false;
-    document.getElementById("pause_button").disabled = true;
+  enable_element(el) {
+    document.getElementById(el).disabled = false;
   }
 
-  //First grid display, set up table cells to display game of life grid
-  start() {
+  delete_game() {
+    let game_div = document.getElementById('game_of_life_div');
+    let tbl = document.getElementsByTagName('table');
+    console.log("Deleting table", tbl.length);
+    if (tbl.length > 0){
+      game_div.removeChild(tbl[0]);
+    }
+  }
+
+  create_game() {
+
+    this.pause();
     self.cycle_count++;
 
+    document.getElementById("new_game").disabled = true;
     document.getElementById("color_picker").disabled = false;
     document.getElementById("myRange").disabled = false;
-    //first, create initial table grid for the game
-    //create table
-    let game_div = document.getElementById('game_div');
+    document.getElementById("run_game").disabled = false;
+
+    this.delete_game();  //Delete any previous games
+
+    //Create the game as a table
+    let game_div = document.getElementById('game_of_life_div');
     let tbl = document.createElement('TABLE');
     game_div.appendChild(tbl);
     tbl.style.height = this.grid.length
@@ -145,23 +166,37 @@ class Game {
         } else {
           //create a living cell
           cell.className = "living_cell"; //add to CSS if needed
-          cell.style.backgroundColor = this.living_color;
+          //cell.style.backgroundColor = this.living_color;
         }
       }
     }
+  }
+
+  //Causes the game of life to cycle until stopped at rate of cycle_speed
+  run_game() {
+    document.getElementById("run_game").disabled = true;
+    this.cycle_timer = setInterval(() => this.update_game(), this.cycle_speed);
+    document.getElementById("new_game").disabled = false;
+    document.getElementById("pause").disabled = false;
+  }
+
+  pause() {
+    //console.log("game paused");
+    clearInterval(this.cycle_timer);
+    console.log("speed:", game.cycle_speed);
+    document.getElementById("run_game").disabled = false;
+    document.getElementById("pause").disabled = true;
   }
 
   //Called every cycle to use table cells to display game of life grid
   update_game() {
     this.cycle_count += 1;
     this.update_cell_values();
-    document.getElementById("run_game").disabled = true;
-    document.getElementById("new_game").disabled = true;  //disallow start of game until seed chosen
-    document.getElementById("pause_button").disabled = false;
+    //document.getElementById("new_game").disabled = true;  //disallow start of game until seed chosen
 
       //Iterate through the given current grid state from python, for each cell
       //turn the corresponding html table cell "on" or "off" (color or transparent)
-      let game_div = document.getElementById('game_div');
+      let game_div = document.getElementById('game_of_life_div');
       let tbl = game_div.firstChild;
       let tbl_body = tbl.firstChild;
       let rows = this.grid;
@@ -267,7 +302,6 @@ class Game {
 
   //Starting seeds for the game of life (i.e. decides if each initial cell is alive or dead)
   set_seed (seed_type){
-
   //Seeds a starting grid with random living cells
   // based on this.probability. Higher probability ==
   // fewer living cells.
@@ -287,16 +321,16 @@ class Game {
   //Grid on/off button, separates or collapses border between cells
   //To keep same table size, cells with the borders are also shrunk slightly
   collapse_border() {
-    let game_div = document.getElementById('game_div');
+    let game_div = document.getElementById('game_of_life_div');
     let tbl = game_div.firstChild;
     if (this.cell_padding === true) {
-      this.cell_size = "8px";
+      this.cell_size = this.cell_size_min;
       tbl.style.borderCollapse = "separate";
       this.cell_padding = false;
     }
     else {
       tbl.style.borderCollapse = "collapse";
-      this.cell_size = "10px";
+      this.cell_size = this.cell_size_max;
       this.cell_padding = true;
       }
     let cells = document.querySelectorAll('td');

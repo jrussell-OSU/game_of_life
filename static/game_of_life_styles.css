@@ -5,38 +5,45 @@ body {
     background-size: auto;
     background-image: url(images/space1.jpeg);
     text-align: center;
-}
+    overflow: hidden;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+  }
 
 label, h1, p, h6 {
     color: #E3E4E4;
     /*color:#85144b;*/
+    padding: 10px;
 }
 
 h1{
     text-align: center;
-    opacity: .7;
 }
 
-.buttons_div{
-    padding: 20px;
+#controls_div{
     margin: auto;
     /*max-width: 600px;*/
-    max-width: 100%;
+    /*max-width: 100%;*/
     text-align: center;
     position: relative;
     /*display: inline-block;
      */
-     opacity: .65;
+     z-index: 2;
+     opacity: .85;
 }
 
-
-#game_div{
-    position: relative;
+#game_of_life_div{
+    position: absolute;
     /*height: 508px;
     width: 508px;*/
-    text-align: center;
     margin: 0 auto;
-    display: inline-block;
+    z-index: 1;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    min-width: 1000px;
+    padding: 0px !important;
+
 
     /*uncomment to create inner display window
     background-color: black;
@@ -51,14 +58,14 @@ h1{
 
 
 table {
-    table-layout: fixed;
     border-collapse: collapse;
-    margin: auto;
-    /*
+    table-layout: fixed;
+        /*
     height: 320px;
     width: 480px;
     */
     empty-cells: show;
+    margin: 0 auto;
 }
 
 .dead_cell{
@@ -72,9 +79,13 @@ td {
 
 /****Range Slider from https://www.w3schools.com/howto/howto_js_rangeslider.asp****/
 .slidecontainer {
-    width: 100%; /* Width of the outside container */
-    text-align:center;
+    text-align: center;
     position: relative;
+    font-weight: bold;
+    padding-top: 15px;
+    display: inline-block;
+    padding-bottom: 0px;
+    /*width: 100%;*/
 }
 
 /* The slider itself */
@@ -85,11 +96,12 @@ td {
   border-radius: 5px;
   background: #d3d3d3;
   outline: none;
-  opacity: 0.5;
+  opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
-}
+  display: block;
 
+}
 
 /* Mouse-over effects */
 .slider:hover {
@@ -115,6 +127,7 @@ td {
   background: #04AA6D;
   cursor: pointer;
 }
+
 /**********************************************************************************/
 
 
