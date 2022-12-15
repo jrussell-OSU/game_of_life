@@ -115,8 +115,8 @@ class Game {
 
   }
 
-
-
+  //Deletes game, so a new game can be created
+  //(Removes the game table element)
   delete_game() {
     let game_div = document.getElementById('game_of_life_div');
     let tbl = document.getElementsByTagName('table');
@@ -353,7 +353,5 @@ class Game {
     speed = Math.abs(this.cycle_speed_max - speed)
     this.cycle_speed = speed;
   }
-
-
 
 }
