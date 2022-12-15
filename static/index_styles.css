@@ -9,13 +9,13 @@ body {
     height: 100%;
 }
 
-#intro_skills {
+#main_body {
     max-width: 1000px;
 }
 
-#skills_list {
+.bottom-left-div {
     text-align: left;
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 .skill {
@@ -28,7 +28,7 @@ body {
     background-color: #efebd8 !important;
 }
 
-#intro {
+.top-right-div {
     text-align: right;
     padding-right: 15px;
 }
