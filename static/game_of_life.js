@@ -88,7 +88,7 @@ class Game {
     //type of starting "seed" grid
     this.rows = 100;
     this.columns = 100;
-    this.probability = 6;  //affects chance of initial cell being alive, higher num == lower chance
+    this.probability = 7;  //affects chance of initial cell being alive, higher num == lower chance
     this.grid = [];
     this.blank_grid = [];
     this.all_coords = [];
