@@ -5,11 +5,11 @@ window.addEventListener("load", page_setup, false);
 //Starts a new Game() and sets up webpage as needed
 function page_setup() {
 
-  //Starts new game of life
-  new_game();
-
   //Disable start button and speed slider until new game is set up
   disable_elements(["run_game", "myRange", "pause", "color_picker"]);
+
+  //Starts and runs new game of life
+  new_game();
 
   //Setup cell color picking
   color_picker_event_setup();
@@ -23,6 +23,7 @@ function page_setup() {
 
 function new_game() {
   globalThis.game = new Game();
+  globalThis.game.setup();
 }
 
 //Change color of living cell based on color picker input
@@ -97,10 +98,11 @@ class Game {
     this.cell_size_min = "8px";
     this.cell_size_max = "10px";
     this.cell_padding = true;
-    this.cycle_speed = 200;
+    this.cycle_speed = 150;  //lower number = faster
     this.cycle_count = 0;
-    //this.living_color = "#2ACB70";
-    this.living_color = "#C165EC"
+    this.living_color = "#D192DD";
+    //this.living_color = "#C165EC"
+    //this.living_color = "#CE6566";
     this.cycle_speed_max = 1000;
   }
 
@@ -110,9 +112,10 @@ class Game {
     this.set_all_cell_coords();
     this.set_seed(seed_type);
     this.create_game();
-    document.getElementById("run_game").disabled = false;
+    document.getElementById("run_game").disabled = true;
     document.getElementById("color_picker").disabled = false;
-
+    this.run_game();
+    document.getElementById("pause").disabled = false;
   }
 
   //Deletes game, so a new game can be created
@@ -134,7 +137,7 @@ class Game {
     document.getElementById("new_game").disabled = true;
     document.getElementById("color_picker").disabled = false;
     document.getElementById("myRange").disabled = false;
-    document.getElementById("run_game").disabled = false;
+    document.getElementById("run_game").disabled = true;
 
     this.delete_game();  //Delete any previous games
 
@@ -170,7 +173,6 @@ class Game {
         }
       }
     }
-    this.run_game();
   }
 
   //Causes the game of life to cycle until stopped at rate of cycle_speed
