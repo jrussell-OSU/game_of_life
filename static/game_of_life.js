@@ -170,6 +170,7 @@ class Game {
         }
       }
     }
+    this.run_game();
   }
 
   //Causes the game of life to cycle until stopped at rate of cycle_speed
