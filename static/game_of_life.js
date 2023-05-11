@@ -195,7 +195,6 @@ class Game {
   update_game() {
     this.cycle_count += 1;
     this.update_cell_values();
-    //document.getElementById("new_game").disabled = true;  //disallow start of game until seed chosen
 
       //Iterate through the given current grid state from python, for each cell
       //turn the corresponding html table cell "on" or "off" (color or transparent)
