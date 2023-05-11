@@ -1,150 +1,53 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <link rel="stylesheet" href="index_styles.css">
+    <title>Game of Life</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
   </head>
 
-  <!--Nav Bar-->
-  <body class="bg-dark bg-gradient">
-  <nav class="navbar navbar-expand bg-light">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon">toggle</span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" onclick="view_home();" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              My Work
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="game_of_life">Game of Life</a></li>
-              <li><a class="dropdown-item" href="#"></a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="https://github.com/jrussell-OSU">My GitHub</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" onclick="view_about_me();" href="#">About Me</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#"></a>
-          </li>
-        </ul>
+  <body class="game_of_life">
+    <div id="main_gol_div">
+      <div id="game_of_life_div" class="container-fluid"></div>
+      <div id="controls_div">
+      <h1>Conway's Game of Life</h1>
+
+        <!--Primary Buttons-->
+        <div class="buttons_div">
+          <button id="new_game" class="btn btn-primary" onclick="game.setup();">New Game</button>
+          <button id="run_game" class="btn btn-primary" onclick="game.run_game();">Run</button>
+          <button id="pause" class="btn btn-primary" onClick="game.pause();">Pause</button>
+          <br>
+        </div>
+
+        <!--Secondary Buttons-->
+        <div class="container" id="secondary_buttons">
+          <input title="Disabled until game start. Game will pause when color changed." id="color_picker" type="color" value="#C165EC">
+          <button id="grid_collapse" class="btn btn-secondary" onclick="game.collapse_border()">Toggle Grid</button>
+          <button id="more_info_button" class="btn btn-info">Info</button>
+          <span class="backgroundtooltiptext">Change may take a few seconds.</span>
+        </div>
+
+        <!--Game of Life Wiki More Info modal button-->
+        <div id="more_info" class="modal">
+          <div id="more_info_modal">
+            <span class="close">&times;</span>
+            <p class="more_info_text">
+              From Wikipedia: {{context.wiki_text}}
+            </p>
+            <p class="more_info_text">
+              Patterns will continue developing until they stabalize into stable or repeating forms. Try changing the color and cycle speed!
+            </p>
+
+          </div>
+        </div>
+
+        <!--Speed slider bar-->
+        <div class="slidecontainer">
+            <input type="range" min="600" max="1000" value="800" class="slider" id="myRange">
+            <label for="myRange">Cycle Speed</label>
+        </div>
       </div>
     </div>
-  </nav>
-
-  <!--Introduction and Skills-->
-  <div class="container-fluid" id="home_frame">
-    <div class="container-fluid right-div" id="intro">
-      <br>
-      <h2>My name is Jacob Russell</h2>
-      <h4>I'm a software developer<br>
-      with a B.S. in Computer Science</h4>
-      <br>
-    </div>
-    <div class="container-fluid left-div"  id="skills_list">
-      <ul class=skill>Python</ul>
-      <ul class=skill>C/C++</ul>
-      <ul class=skill>Java</ul>
-      <ul class=skill>JavaScript</ul>
-      <ul class=skill>Node.js</ul>
-      <ul class=skill>Express</ul>
-      <ul class=skill>React</ul>
-      <ul class=skill>Bootstrap</ul>
-      <ul class=skill>Linux</ul>
-      <ul class=skill>HTML/CSS</ul>
-      <ul class=skill>Google Cloud Platform</ul>
-      <ul class=skill>RESTful APIs</ul>
-      <ul class=skill>Microservices</ul>
-      <ul class=skill>Flask</ul>
-      <ul class=skill>AJAX</ul>
-      <ul class=skill>SQL: MariaDB</ul>
-      <ul class=skill>NoSQL: MongoDB, Firestore</ul>
-      <ul class=skill>Git</ul>
-      <ul class=skill>Agile</ul>
-    </div>
-  </div>
-
-  <!--About Me (contact, education, and work history)-->
-  <div id="about_me_frame" class="container-fluid" style="display:none;">
-    <div id="contact_div" class="container-fluid right-div">
-      <br>
-      <h3>Contact</h3>
-      <h6>jacob.r.russell@gmail.com</h6>
-      <h6>russelj2@oregonstate.edu</h6>
-    </div>
-    <div id="education_div" class="container-fluid left-div">
-        <br>
-      <h3>Education</h3>
-      <h5>
-      Bachelor's of Computer Science<br>
-      Oregon State University</h5>
-      <h6>
-      Graduated 2023<br>
-      GPA: 4.00<br>
-        <br>
-        <br>
-      Master's of Liberal Arts and Sciences<br>
-      University of North Carolina<br>
-        <br>
-      Bachelor's of English<br>
-      Western Michigan University<br>
-      </h6>
-    </div>
-
-    <div id="work_history_div" class="container-fluid right-div">
-      <br>
-      <h3>Work History</h3>
-      <h5>BELCo<br>
-      Software Developer</h5>
-      <h6>Corvallis, OR<br>
-      Current</h6>
-      <h6>
-        Frontend and backend web application development<br>
-        JavaScript, Node, Express, React, MongoDB, Docker
-      </h6>
-      <br>
-      <h5>PrimeCare of Novi<br>
-      IT Support and Medical Billing</h5>
-      <h6>39555 W. Ten Mile Rd<br>
-      Novi, MI 48735<br>
-      248-426-7200<br>
-      2018 - Current</h6>
-      <br>
-      <h5>Ya Tro M.D. Urgent Care<br>
-      Medical Billing</h5>
-      <h6>21090 Allen Rd<br>
-      Woodhaven, MI 48183<br>
-      734-752-6460<br>
-      2017 - 2018</h6>
-      <br>
-      <h5>Four Seasons Compassion for Life<br>
-      Medical Billing</h5>
-      <h6>571 S Allen Rd<br>
-      Flatrock, NC 28731<br>
-      828-692-6178<br>
-      2015 - 2016</h6>
-      <br>
-      <h5>Aeroflow Healthcare<br>
-      Medical Billing</h5>
-      <h6>3165 Sweeten Creek Rd<br>
-      Asheville, NC 28704<br>
-      888-345-1780<br>
-      2011 - 2015</h6>
-      <br>
-    </div>
-  </div>
-
-
-
   </body>
 </html>
-
