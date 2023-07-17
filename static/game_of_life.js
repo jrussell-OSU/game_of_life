@@ -9,7 +9,7 @@ function page_setup() {
   disable_elements(["run_game", "myRange", "pause", "color_picker"]);
 
   //Starts and runs new game of life
-  new_game();
+  globalThis.game = new Game();
 
   //Setup cell color picking
   color_picker_event_setup();
@@ -24,6 +24,8 @@ function page_setup() {
 function new_game() {
   globalThis.game = new Game();
   globalThis.game.setup();
+  globalThis.game.pause();
+  document.getElementById("run_game").disabled = true;
 }
 
 //Change color of living cell based on color picker input
@@ -87,16 +89,16 @@ function enable_elements(el_arr) {
 class Game {
   constructor() {
     //type of starting "seed" grid
-    this.rows = 100;
-    this.columns = 100;
-    this.probability = 7;  //affects chance of initial cell being alive, higher num == lower chance
+    this.rows = 120;
+    this.columns = 120;
+    this.probability = 9;  //affects chance of initial cell being alive, higher num == lower chance
     this.grid = [];
     this.blank_grid = [];
     this.all_coords = [];
     this.cycle_timer = null;  //holds the game cycle setInterval() object
-    this.cell_size = "10px";
-    this.cell_size_min = "8px";
-    this.cell_size_max = "10px";
+    this.cell_size = "8px";
+    this.cell_size_min = "6px";  //gives a "grid" appearance
+    this.cell_size_max = "8px";  //gives a "blob" appearance
     this.cell_padding = true;
     this.cycle_speed = 150;  //lower number = faster
     this.cycle_count = 0;
@@ -112,10 +114,13 @@ class Game {
     this.set_all_cell_coords();
     this.set_seed(seed_type);
     this.create_game();
+    this.update_game();
     document.getElementById("run_game").disabled = true;
     document.getElementById("color_picker").disabled = false;
-    this.run_game();
-    document.getElementById("pause").disabled = false;
+    //this.run_game();  # uncomment to autostart game
+    //document.getElementById("pause").disabled = false;
+    document.getElementById("run_game").disabled = false;
+
   }
 
   //Deletes game, so a new game can be created
@@ -123,7 +128,6 @@ class Game {
   delete_game() {
     let game_div = document.getElementById('game_of_life_div');
     let tbl = document.getElementsByTagName('table');
-    console.log("Deleting table", tbl.length);
     if (tbl.length > 0){
       game_div.removeChild(tbl[0]);
     }
@@ -134,7 +138,7 @@ class Game {
     this.pause();
     self.cycle_count++;
 
-    document.getElementById("new_game").disabled = true;
+    document.getElementById("new_game").disabled = false;
     document.getElementById("color_picker").disabled = false;
     document.getElementById("myRange").disabled = false;
     document.getElementById("run_game").disabled = true;
@@ -184,9 +188,7 @@ class Game {
   }
 
   pause() {
-    //console.log("game paused");
     clearInterval(this.cycle_timer);
-    console.log("speed:", game.cycle_speed);
     document.getElementById("run_game").disabled = false;
     document.getElementById("pause").disabled = true;
   }
@@ -267,8 +269,6 @@ class Game {
           yn = yn % this.rows;
 
         neighbors += grid[yn][xn];
-
-        //neighbors += grid[(y+j)%this.rows][(x+i)%this.columns];
       }
     }
     if (grid[y][x] == 1) {
@@ -282,7 +282,6 @@ class Game {
   //If cell has < 2 or > 3 neighbors: it dies
   update_cell_values() {
     const saved_grid = structuredClone(this.grid); //make copy of grid
-    //console.log(this.grid);
     for (let i = 0; i < this.all_coords.length; i++) {
       let x = this.all_coords[i][0];
       let y = this.all_coords[i][1];
